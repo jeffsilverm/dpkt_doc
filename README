@@ -7,4 +7,7 @@ packet captures.
 Each protocol is a deliverable.  Each function is a deliverable.  Each sample
 packet capture is a deliverable.
 
+The list of packet captures for testing purposes is given in the file 
+test_cases.txt, which is a tab-delimited file giving the file name and test
+conditions the file was generated under.
 
