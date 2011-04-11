@@ -1,0 +1,7 @@
+File	Test conditions
+ftp_active_ipv4_FAIL.cap	Active mode FTP over IPv4, showing a failure
+ftp_ipv6.cap            	Extended passive mode FTP over IPv6
+ftp_passive_ipv4_FAIL.cap	Passive mode FTP over IPv4, showing a failure
+http_ipv4.cap            	HTTP over IPv4
+http_ipv6.cap           	HTTP over IPv6
+
