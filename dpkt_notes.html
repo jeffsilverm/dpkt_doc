@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=windows-1252"
+ http-equiv="Content-Type">
+  <title>dpkt notes</title>
+</head>
+<body>
+<h1>Jeff Silverman's dpkt documentation</h1>
+This page is a notebook of things I have learned about dpkt.<br>
+<br>
+<h2>HTTP response bodies</h2>
+Status: New
+<br>
+Owner: ----
+<br>
+Labels: Type-Defect Priority-Medium
+<br>
+<br>
+New issue 69 by <a class="moz-txt-link-abbreviated"
+ href="mailto:cuiheng....@gmail.com:">cuiheng....@gmail.com:</a> is
+dpkt able to parse the HTTP response ????
+<br>
+<a class="moz-txt-link-freetext"
+ href="http://code.google.com/p/dpkt/issues/detail?id=69">http://code.google.com/p/dpkt/issues/detail?id=69</a>
+<br>
+<br>
+Hi,
+<br>
+<br>
+&nbsp;&nbsp; I am currently using dpkt to parse libpcap format file.
+What I want to do is to extract the raw content of the HTTP response.
+However, I found my script ONLY works for the HTTP responses that have
+small content length (&lt;1500Byte).<br>
+Updates:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status: WontFix
+<br>
+<br>
+Comment #2 on issue 69 by dugsong: is dpkt able to parse the HTTP
+response ????
+<br>
+<a class="moz-txt-link-freetext"
+ href="http://code.google.com/p/dpkt/issues/detail?id=69">http://code.google.com/p/dpkt/issues/detail?id=69</a>
+<br>
+<br>
+dpkt doesn't do any TCP stream reassembly. You need to do that
+yourself.
+<br>
+<br>
+Here's an example:
+<br>
+<br>
+&nbsp;&nbsp;&nbsp; <a class="moz-txt-link-freetext"
+ href="http://code.google.com/p/dsniff/source/browse/trunk/dsniff/lib/reasm.py">http://code.google.com/p/dsniff/source/browse/trunk/dsniff/lib/reasm.py</a>
+<br>
+<br>
+If you're doing it live, you need to do your own stream parsing
+instead, e.g. dsniff's HTTP stream parser:
+<br>
+<br>
+&nbsp;&nbsp;&nbsp; <a class="moz-txt-link-freetext"
+ href="http://code.google.com/p/dsniff/source/browse/trunk/dsniff/lib/http.py">http://code.google.com/p/dsniff/source/browse/trunk/dsniff/lib/http.py</a>
+<br>
+<br>
+Good luck!
+<br>
+<br>
+<br>
+</body>
+</html>
