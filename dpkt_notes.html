@@ -65,7 +65,29 @@ instead, e.g. dsniff's HTTP stream parser:
 <br>
 Good luck!
 <br>
+<h3>Using dpkt to decode HTTP headers</h3>
+Oversimplifying outrageously, you can do something like this:<br>
 <br>
+<pre>    eth = dpkt.ethernet.Ethernet(buf)<br>    ip = eth.data<br>    tcp = ip.data<br><br># If the destination port is 80 and there is data in the packet, then probably this is an HTTP request.  TO be certain, there should<br># be a TCP finite state machine in here.<br>    if tcp.dport == 80 and len(tcp.data) &gt; 0:<br>        http_req = dpkt.http.Request(tcp.data)<br><br></pre>
+<p>The dpkt.http.Request object has the following attributes:<br>
+</p>
+<pre>['_Request__methods', '_Request__proto', '__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__getitem__', '__hash__', '__hdr_defaults__', '__init__', '__len__', '__metaclass__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'body', 'data', 'headers', 'method', 'pack', 'pack_hdr', 'unpack', 'uri', 'version']<br>(Pdb) print http.method<br>GET<br>(Pdb) print http.body<br><br>(Pdb) print http.headers<br>{'accept-language': 'en-us,en;q=0.5', 'accept-encoding': 'gzip,deflate', 'connection': 'keep-alive', 'keep-alive': '115', 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'user-agent': 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.16) Gecko/20110323 Ubuntu/10.04 (lucid) Firefox/3.6.16', 'accept-charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7', 'host': 'www.commercialventvac.com'}<br>(Pdb) print http.pack<br>&lt;bound method Request.pack of Request(version='1.1')&gt;<br>(Pdb) print http.pack()<br>GET / HTTP/1.1<br>accept-language: en-us,en;q=0.5<br>accept-encoding: gzip,deflate<br>connection: keep-alive<br>keep-alive: 115<br>accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br>user-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.16) Gecko/20110323 Ubuntu/10.04 (lucid) Firefox/3.6.16<br>accept-charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7<br>host: www.commercialventvac.com<br><br><br>(Pdb) print http.pack_hdr()<br>accept-language: en-us,en;q=0.5<br>accept-encoding: gzip,deflate<br>connection: keep-alive<br>keep-alive: 115<br>accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br>user-agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.16) Gecko/20110323 Ubuntu/10.04 (lucid) Firefox/3.6.16<br>accept-charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7<br>host: www.commercialventvac.com<br><br>(Pdb) <br><br></pre>
+<h3>dsniff has a tcp decoder, I think.</h3>
+Except I can't find it.&nbsp; It is available for downloading from
+ubuntu.&nbsp; Find the source code.<br>
 <br>
+<h2>SCTP Stream Control Transmission Protocol</h2>
+Get the source code from <span style="text-decoration: underline;">https://github.com/philpraxis/pysctp.git</span>.&nbsp;
+In order to build the C software, I need the package libsctp-dev, which
+I installed using synaptic.&nbsp; The installation script puts the file
+<span style="font-family: monospace;">_sctp.</span>h in<span
+ style="font-family: monospace;"> /usr/local</span>.&nbsp; It should go
+in <span style="font-family: monospace;">/usr/local/include</span>.&nbsp;
+Fixed that.&nbsp; pysctp comes with two SCTP clients, but no SCTP
+servers, so it is difficult to test.&nbsp; I sent a message to the
+author of the software, <a href="mailto:phil@p1sec.com">Philippe
+Langlois &lt;Phil __AT__ p1sec.com&gt;</a> .<br>
+<span style="text-decoration: underline;"><br>
+</span><br>
 </body>
 </html>
