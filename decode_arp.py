@@ -5,9 +5,13 @@ import dpkt
 import sys
 import socket
 import pcap
+import subprocess
 
-
-pc = pcap.pcap()       # set up for packet capture
+hostname = subprocess.Popen("hostname", stdout=subprocess.PIPE).communicate()[0]
+if hostname == 'jeffs-laptop\n' :
+    pc = pcap.pcap('wlan0')       # set up for packet capture
+else:
+    pc = pcap.pcap('eth0')
 pc.setfilter('arp')         # Use a kernel filter and just pass arp traffic
 
 for ts, pkt in pc:
