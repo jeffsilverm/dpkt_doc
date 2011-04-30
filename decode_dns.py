@@ -34,8 +34,10 @@ def decode_dns_response ( answer ) :
         print "response is an IPv4 address", socket.inet_ntoa( r_data )
     elif r_type == dpkt.dns.DNS_AAAA :
         print "response is an IPv6 address", socket.inet_ntop( socket.AF_INET6, r_data )
+    elif r_type == dpkt.dns.DNS_PTR :
+        print "response is a hostname from an IP address", r_data 
     else :
-        print "Response type is something other than a CNAME, IPv4 address, or IPv6 address", r_type
+        print "Response type is something other than a CNAME, PTR, IPv4 address, or IPv6 address", r_type
 
 
 def main() :
@@ -56,10 +58,15 @@ def main() :
             dns = dpkt.dns.DNS(data)
             if dns.opcode != dpkt.dns.DNS_QUERY :
                 print "A DNS packet was sent to the nameserver, but the opcode was %d instead of DNS_QUERY (this is a software error)" % dns.opcode
-            print "query for ", dns.qd[0].name
+            if dns.qr != dpkt.dns.DNS_Q :
+                print "A DNS packet was sent to the name server, but dns.qr is not 0 and should be.  It is %d" % dns.qr
+            print "query for ", dns.qd[0].name, "ID is ", dns.id, "dns.qr is ", dns.qr
         elif sport == 53 :
             # UDP/53 is a DNS response
             dns = dpkt.dns.DNS(data)
+            print "responding to ", dns.id, "dns.qr is ", dns.qr
+            if dns.qr != dpkt.dns.DNS_R :
+                print "A DNS packet was received from a name server, but dns.qr is not 1 and should be.  It is %d" % dns.qr
             if dns.get_rcode() == dpkt.dns.DNS_RCODE_NOERR :
                 print "Response has no error"
             elif dns.get_rcode() == dpkt.dns.DNS_RCODE_NXDOMAIN :
