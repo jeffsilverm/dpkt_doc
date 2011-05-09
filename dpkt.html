@@ -26,21 +26,25 @@ wonderful
 peice
 of
 software
-but it has very little documentation,
+but
+it has very little documentation,
 just some examples about how to use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
 would
 have
-you believe is obvious is not obvious at all.
+you
+believe is obvious is not obvious at all.
 There are more examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
 parse
-a pcap file that has HTTP</a> and <a
+a
+pcap file that has HTTP</a> and <a
  href="http://jon.oberheide.org/blog/2008/08/25/dpkt-tutorial-1-icmp-echo/">How
 to
-generate and
+generate
+and
 transmit an ICMPv4 packet</a>.
 <p>I am doing this work as a classroom project for <a
  href="http://staff.washington.edu/jon/python-course/course3.html">The
@@ -48,7 +52,8 @@ University of Washington Python Programming class</a>. Most of the
 material is in <a href="git://github.com/jeffsilverm/dpkt_doc.git">github.com</a>.
 To
 get
-it, give the following commands:
+it,
+give the following commands:
 </p>
 <pre>[ps37854]$ <kbd>mkdir dpkt_doc</kbd>
 [ps37854]$ <kbd>cd dpkt_doc</kbd>
@@ -307,8 +312,71 @@ contains a time as a floating point number.&nbsp; The buffer is a
 complete packet.&nbsp; For example:<br>
 </p>
 <pre><code>#!/usr/bin/env python<br># -*- coding: utf-8 -*-<br><br>import dpkt<br>import sys <br><br><br>f = open(sys.argv[1])<br>pcap = dpkt.pcap.Reader(f)<br>frame_counter = 0<br>for ts, buf in pcap:<br>    frame_counter += 1<br>    if frame_counter &gt; 1 :<br>        print "%d: %f %f" % ( frame_counter, ts, ts - last_time )<br>    last_time = ts<br><br>f.close()</code><br><br></pre>
-<p><br>
+<h3>dpkt.tcp</h3>
+TCP is a reliable, stream oriented protocol.&nbsp; Refer to <a
+ href="http://tools.ietf.org/html/rfc793">RFC 793</a> for more
+information.<br>
+<br>
+<h4>dpkt.tcp.ack</h4>
+<h4>dpkt.tcp.data</h4>
+<p>The payload of this TCP segment.&nbsp; Note that the seqments may be
+delivered out of order, so it is not sufficient to simply join the
+payloads together.&nbsp; The maximum length of a TCP segment payload is
+the MTU size of this network less the length of the IP header less the
+length of a TCP header with no options.&nbsp; For example, Ethernet has
+an MTU of 1500 bytes (Most modern networks use this size to avoid
+fragmentation on all links - IPv6 the smallest MTU must be at least
+1200 bytes but may be longer).&nbsp; The IPv4 header is 20 bytes,
+minimum.&nbsp; An IPv6 header is 40 bytes.&nbsp; The TCP header is 20
+bytes, so the maximum length of a TCP segment is 1460 bytes for IPv4
+and 1440 bytes for IPv6.<br>
 </p>
+<h4>dpkt.tcp.dport</h4>
+<p>The destination port of the packet, a 16 bit unsigned number.<br>
+</p>
+<h4>dpkt.tcp.flags</h4>
+The TCP flags.&nbsp; To decode them, use the following code:<br>
+<pre><code>            fin_flag = ( tcp.flags &amp; 0x01 ) != 0<br>            syn_flag = ( tcp.flags &amp; 0x02 ) != 0<br>            rst_flag = ( tcp.flags &amp; 0x04 ) != 0<br>            psh_flag = ( tcp.flags &amp; 0x08 ) != 0<br>            ack_flag = ( tcp.flags &amp; 0x10 ) != 0<br>            urg_flag = ( tcp.flags &amp; 0x20 ) != 0<br>            ece_flag = ( tcp.flags &amp; 0x40 ) != 0<br>            cwr_flag = ( tcp.flags &amp; 0x80 ) != 0</code><br></pre>
+<br>
+<h4>dpkt.tcp.off</h4>
+4 bits.&nbsp; Specifies the size of the TCP header in 32 bit
+longwords.&nbsp; The minimum size of a TCP header is 20 bytes (5
+longwords) and the maximum is 60 bytes (15 longwords).&nbsp; This field
+gets its name because it is the offset from the beginning of the header
+to the data.<br>
+<br>
+<h4>dpkt.tcp.off_x2</h4>
+<h4>dpkt.tcp.opts</h4>
+This is a list of options.&nbsp; <span style="color: rgb(255, 0, 0);">Needs
+more detail.</span><br>
+<br>
+<h4>dpkt.tcp.pack</h4>
+<h4>dpkt.tcp.pack_hdr</h4>
+<h4>dpkt.tcp.parse_opts ( tcp.opts )<br>
+</h4>
+<p>This method parses the TCP options field into a list of (option
+number, option value) tuples.&nbsp; Use the code sequence<br>
+</p>
+<pre><code>option_list = dpkt.tcp.parse_opts ( tcp.opts )</code><br><br></pre>
+<p>to decode the options<br>
+</p>
+<h4>dpkt.tcp.seq</h4>
+A 32 bit unsigned number.&nbsp; If the SYN flag is set, then this is
+the initial sequence number, and all subsequent sequence numbers are
+relative to this number.&nbsp; If the SYN flag is clear, then this
+number is the location of the payload of this sequence in the data
+stream.&nbsp; Note that segment can be delivered out of order, so the
+sequence number is used to get the bytes back in order.dpkt.tcp.sport
+<h4>dpkt.tcp.sum</h4>
+<br>
+<br>
+<h4>dpkt.tcp.unpack</h4>
+<h4>dpkt.tcp.urp</h4>
+<h4>dpkt.tcp.win</h4>
+A 16 bit unsigned number.&nbsp; Specifies how far past the current
+sequence number in this acknowlegement the receiver is willing to
+receive.<br>
+<br>
 <h2><a class="mozTocH2" name="mozTocId874488"></a>Classes that inherit
 from dpkt.Packet</h2>
 <p>There are a lot of classes that inherit from dpkt.Packet.&nbsp; I
