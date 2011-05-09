@@ -6,6 +6,7 @@ import dpkt
 import sys
 import socket
 import pcap
+import struct
 
 def connection_id_to_str (cid, v=4) :
     """This converts the connection ID cid which is a tuple of (source_ip_address, source_tcp_port, destination_ip_address,
@@ -40,6 +41,19 @@ function assembles the buffer into order.  It should raise an exception if there
         return_buffer = return_buffer + buffer_dictionary[segment]
     return return_buffer    
 
+def get_message_segment_size (options ) :
+    """get the maximum segment size from the options list"""
+    options_list = dpkt.tcp.parse_opts ( options )
+    for option in options_list :
+        if option[0] == 2 :
+# The MSS is a 32 bit number.  Look at RFC 793 http://www.rfc-editor.org/rfc/rfc793.txt page 17.  However dpkt decodes it as a 16
+# bit number.  Technically, it doesn't matter, I think, because an MSS is never going to be bigger than 65496 bytes.
+# The most common value is 1460 bytes (IPv4) which 0x05b4 or 1440 bytes (IPv6) which is 0x05a0.  The format string ">H" means
+# big-endian unsigned 16 bit number.  It should be ">L" which is big-endian 32 bit number.
+            mss = struct.unpack(">H", option[1])
+            return mss         
+
+
 def decode_tcp(pcap):
     """This function decodes a packet capture file f and breaks it up into tcp connections"""
     print "counter\tsrc prt\tdst prt\tflags"
@@ -60,7 +74,7 @@ def decode_tcp(pcap):
             if ip.v != 4 :
                 raise ValueError, "In packet %d, the ether type is IPv4 but the IP version number is %d not 4" % (
                     packet_cntr, ip.v )
-           # Deal with fragmentation here
+           # Deal with IP fragmentation here
         elif eth.type == dpkt.ethernet.ETH_TYPE_IP6 :
             ip = eth.data
             if ip.v != 6 :
@@ -72,14 +86,14 @@ def decode_tcp(pcap):
             continue    # Not going to deal with anything other than IP
         if ip.p == dpkt.ip.IP_PROTO_TCP :
             tcp = ip.data
-            fin_flag = ( tcp.flags & 0x01 ) != 0
-            syn_flag = ( tcp.flags & 0x02 ) != 0
-            rst_flag = ( tcp.flags & 0x04 ) != 0
-            psh_flag = ( tcp.flags & 0x08 ) != 0
-            ack_flag = ( tcp.flags & 0x10 ) != 0
-            urg_flag = ( tcp.flags & 0x20 ) != 0
-            ece_flag = ( tcp.flags & 0x40 ) != 0
-            cwr_flag = ( tcp.flags & 0x80 ) != 0
+            fin_flag = ( tcp.flags & dpkt.tcp.TH_FIN ) != 0
+            syn_flag = ( tcp.flags & dpkt.tcp.TH_SYN ) != 0
+            rst_flag = ( tcp.flags & dpkt.tcp.TH_RST ) != 0
+            psh_flag = ( tcp.flags & dpkt.tcp.TH_PUSH) != 0
+            ack_flag = ( tcp.flags & dpkt.tcp.TH_ACK ) != 0
+            urg_flag = ( tcp.flags & dpkt.tcp.TH_URG ) != 0
+            ece_flag = ( tcp.flags & dpkt.tcp.TH_ECE ) != 0
+            cwr_flag = ( tcp.flags & dpkt.tcp.TH_CWR ) != 0
 # The flags string is really for debugging
             flags = (
                 ( "C" if cwr_flag else " " ) +
@@ -99,12 +113,14 @@ def decode_tcp(pcap):
 # important when the connection is closed, because one side might FIN the connection well before the other side does.
             connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport)
             print "Forming a new connection " + connection_id_to_str( connection_id, ip.v ) + " Initial Sequence Number (ISN) is %d" % tcp.seq
-# Should decode the maximum segment size from the options list
-            options_list = dpkt.tcp.parse_opts ( tcp.opts )
             connection_table[connection_id] = Connection_object ( isn = tcp.seq, seq = tcp.seq, string = "" )
+            print "Message segment size client side is ", get_message_segment_size ( tcp.opts )
         elif syn_flag and ack_flag :
-            print "Server responding to a new connection " + connection_id_to_str( connection_id, ip.v )
-            connection_table[connection_id]
+            connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport) 
+            print "Server responding to a new connection " + connection_id_to_str( connection_id, ip.v ) + " Initial Sequence Number (ISN) is %d" % tcp.seq
+            connection_table[connection_id] = Connection_object ( isn = tcp.seq, seq = tcp.seq, string = "" )
+            print "Message segment size client side is ", get_message_segment_size ( tcp.opts ) 
+
     # This is where I am having a little confusion.  My instinct tells me that the connection from the client to the server and the
     # connection from the server back to the client should be connected somehow.  But they aren't, except for the SYN-ACK
     # packet.  Otherwise, the source IP, destination IP, source port and destination port are mirror images, but the streams

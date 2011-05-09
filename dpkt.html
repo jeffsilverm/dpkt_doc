@@ -70,39 +70,79 @@ From git://github.com/jeffsilverm/dpkt_doc
 </pre>
 <ol id="mozToc">
 <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
-  <li><a href="#mozTocId305148">dpkt python module </a>
+  <li><a href="#mozTocId305148">dpkt python module
+    </a>
     <ol>
       <li>
         <ol>
-          <li><a href="#mozTocId379436">Files </a></li>
+          <li><a href="#mozTocId379436">Files
+            </a></li>
           <li><a href="#mozTocId552406">Attributes of dpkt</a>
             <ol>
               <li><a href="#mozTocId141081">dpkt.ah</a></li>
               <li><a href="#mozTocId329579">dpkt.aim</a></li>
-              <li><a href="#mozTocId496699">dpkt.arp </a></li>
+              <li><a href="#mozTocId496699">dpkt.arp</a></li>
               <li><a href="#mozTocId109023">dpkt.array</a></li>
-              <li><a href="#mozTocId680582">dpkt.dns </a></li>
+              <li><a href="#mozTocId680582">dpkt.dns</a></li>
               <li><a href="#mozTocId815238">dpkt.ethernet</a>
                 <ol>
-                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet </a>
+                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet
+                    </a>
                     <ol>
-                      <li><a href="#mozTocId106331">src</a></li>
+                      <li><a href="#mozTocId363973">data</a></li>
                       <li><a href="#mozTocId131995">dst</a></li>
-                      <li><a href="#mozTocId632454">type</a></li>
                       <li><a href="#mozTocId632084">get_type</a></li>
+                      <li><a href="#mozTocId106331">src</a></li>
+                      <li><a href="#mozTocId632454">type</a></li>
                     </ol>
                   </li>
                   <li><a href="#mozTocId229731">dpkt.ethernet.dpkt</a></li>
                   <li><a href="#mozTocId303086">dpkt.ethernet.stp</a></li>
-                  <li><a href="#mozTocId451840">dpkt.ethernet.struct </a></li>
+                  <li><a href="#mozTocId451840">dpkt.ethernet.struct
+                    </a></li>
                 </ol>
               </li>
-              <li><a href="#mozTocId333019">dpkt.ip6.IP6 </a></li>
+              <li><a href="#mozTocId303989">dpkt.ip</a>
+                <ol>
+                  <li><a href="#mozTocId839997">dpkt.ip.IP
+                    </a></li>
+                  <li><a href="#mozTocId685143">dpkt.ip.dpkt
+                    </a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId741073">dpkt.ip6
+                </a>
+                <ol>
+                  <li><a href="#mozTocId333019">dpkt.ip6.IP6
+                    </a></li>
+                </ol>
+              </li>
             </ol>
           </li>
           <li><a href="#mozTocId543744">dpkt.pcap</a>
             <ol>
-              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f) </a></li>
+              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f)
+                </a></li>
+            </ol>
+          </li>
+          <li><a href="#mozTocId761132">dpkt.tcp</a>
+            <ol>
+              <li><a href="#mozTocId822030">dpkt.tcp.ack</a></li>
+              <li><a href="#mozTocId313863">dpkt.tcp.data</a></li>
+              <li><a href="#mozTocId213737">dpkt.tcp.dport</a></li>
+              <li><a href="#mozTocId470551">dpkt.tcp.flags</a></li>
+              <li><a href="#mozTocId754111">dpkt.tcp.off</a></li>
+              <li><a href="#mozTocId194344">dpkt.tcp.off_x2</a></li>
+              <li><a href="#mozTocId482140">dpkt.tcp.opts</a></li>
+              <li><a href="#mozTocId853600">dpkt.tcp.pack</a></li>
+              <li><a href="#mozTocId114488">dpkt.tcp.pack_hdr</a></li>
+              <li><a href="#mozTocId429391">dpkt.tcp.parse_opts (
+tcp.opts )</a></li>
+              <li><a href="#mozTocId204266">dpkt.tcp.seq</a></li>
+              <li><a href="#mozTocId306597">dpkt.tcp.sum</a></li>
+              <li><a href="#mozTocId938666">dpkt.tcp.unpack</a></li>
+              <li><a href="#mozTocId722569">dpkt.tcp.urp</a></li>
+              <li><a href="#mozTocId182841">dpkt.tcp.win</a></li>
             </ol>
           </li>
         </ol>
@@ -185,7 +225,7 @@ attribute.&nbsp; Refer to <a href="decode.py">decode_arp.py</a>.<br>
 dpkt.ethernet.Ethernet has attributes 'data', 'dst', 'get_type', 'ip',
 'pack', 'pack_hdr', 'set_type', 'src', 'type', 'unpack']<br>
 <br>
-<h6>data</h6>
+<h6><a class="mozTocH6" name="mozTocId363973"></a>data</h6>
 Contains the data payload of the ethernet packet.<br>
 <br>
 <h6><a class="mozTocH5" name="mozTocId131995"></a>dst</h6>
@@ -222,7 +262,7 @@ types, refer to <a
 <br>
 <h5><a class="mozTocH5" name="mozTocId451840"></a>dpkt.ethernet.struct<br>
 </h5>
-<h4>dpkt.ip</h4>
+<h4><a class="mozTocH4" name="mozTocId303989"></a>dpkt.ip</h4>
 &gt;&gt;&gt; dir(dpkt.ip)<br>
 ['IP', 'IP_DF', 'IP_MF', 'IP_OFFMASK', 'IP_PROTO_3PC', 'IP_PROTO_AH',
 'IP_PROTO_AN', 'IP_PROTO_ANY0HOP', 'IP_PROTO_ANYENC',
@@ -273,12 +313,12 @@ types, refer to <a
 True<br>
 &gt;&gt;&gt;
 <pre><br></pre>
-<h5>dpkt.ip.IP<br>
+<h5><a class="mozTocH5" name="mozTocId839997"></a>dpkt.ip.IP<br>
 </h5>
-<h5>dpkt.ip.dpkt<br>
+<h5><a class="mozTocH5" name="mozTocId685143"></a>dpkt.ip.dpkt<br>
 </h5>
 <br>
-<h4>dpkt.ip6<br>
+<h4><a class="mozTocH4" name="mozTocId741073"></a>dpkt.ip6<br>
 </h4>
 <h5><a class="mozTocH4" name="mozTocId333019"></a>dpkt.ip6.IP6<br>
 </h5>
@@ -312,13 +352,16 @@ contains a time as a floating point number.&nbsp; The buffer is a
 complete packet.&nbsp; For example:<br>
 </p>
 <pre><code>#!/usr/bin/env python<br># -*- coding: utf-8 -*-<br><br>import dpkt<br>import sys <br><br><br>f = open(sys.argv[1])<br>pcap = dpkt.pcap.Reader(f)<br>frame_counter = 0<br>for ts, buf in pcap:<br>    frame_counter += 1<br>    if frame_counter &gt; 1 :<br>        print "%d: %f %f" % ( frame_counter, ts, ts - last_time )<br>    last_time = ts<br><br>f.close()</code><br><br></pre>
-<h3>dpkt.tcp</h3>
+<h3><a class="mozTocH3" name="mozTocId761132"></a>dpkt.tcp</h3>
 TCP is a reliable, stream oriented protocol.&nbsp; Refer to <a
  href="http://tools.ietf.org/html/rfc793">RFC 793</a> for more
 information.<br>
 <br>
-<h4>dpkt.tcp.ack</h4>
-<h4>dpkt.tcp.data</h4>
+<h4><a class="mozTocH4" name="mozTocId822030"></a>dpkt.tcp.ack</h4>
+<p>This is the last byte that the receiver has received.&nbsp; The
+sender then knows that it need not resend any bytes prior to this point.<br>
+</p>
+<h4><a class="mozTocH4" name="mozTocId313863"></a>dpkt.tcp.data</h4>
 <p>The payload of this TCP segment.&nbsp; Note that the seqments may be
 delivered out of order, so it is not sufficient to simply join the
 payloads together.&nbsp; The maximum length of a TCP segment payload is
@@ -331,28 +374,29 @@ minimum.&nbsp; An IPv6 header is 40 bytes.&nbsp; The TCP header is 20
 bytes, so the maximum length of a TCP segment is 1460 bytes for IPv4
 and 1440 bytes for IPv6.<br>
 </p>
-<h4>dpkt.tcp.dport</h4>
+<h4><a class="mozTocH4" name="mozTocId213737"></a>dpkt.tcp.dport</h4>
 <p>The destination port of the packet, a 16 bit unsigned number.<br>
 </p>
-<h4>dpkt.tcp.flags</h4>
+<h4><a class="mozTocH4" name="mozTocId470551"></a>dpkt.tcp.flags</h4>
 The TCP flags.&nbsp; To decode them, use the following code:<br>
-<pre><code>            fin_flag = ( tcp.flags &amp; 0x01 ) != 0<br>            syn_flag = ( tcp.flags &amp; 0x02 ) != 0<br>            rst_flag = ( tcp.flags &amp; 0x04 ) != 0<br>            psh_flag = ( tcp.flags &amp; 0x08 ) != 0<br>            ack_flag = ( tcp.flags &amp; 0x10 ) != 0<br>            urg_flag = ( tcp.flags &amp; 0x20 ) != 0<br>            ece_flag = ( tcp.flags &amp; 0x40 ) != 0<br>            cwr_flag = ( tcp.flags &amp; 0x80 ) != 0</code><br></pre>
+<pre><code>            fin_flag = ( tcp.flags &amp; dpkt.tcp.TH_FIN ) != 0<br>            syn_flag = ( tcp.flags &amp; dpkt.tcp.TH_SYN ) != 0<br>            rst_flag = ( tcp.flags &amp; dpkt.tcp.TH_RST ) != 0<br>            psh_flag = ( tcp.flags &amp; dpkt.tcp.TH_PUSH) != 0<br>            ack_flag = ( tcp.flags &amp; dpkt.tcp.TH_ACK ) != 0<br>            urg_flag = ( tcp.flags &amp; dpkt.tcp.TH_URG ) != 0<br>            ece_flag = ( tcp.flags &amp; dpkt.tcp.TH_ECE ) != 0<br>            cwr_flag = ( tcp.flags &amp; dpkt.tcp.TH_CWR ) != 0</code><br></pre>
 <br>
-<h4>dpkt.tcp.off</h4>
+<h4><a class="mozTocH4" name="mozTocId754111"></a>dpkt.tcp.off</h4>
 4 bits.&nbsp; Specifies the size of the TCP header in 32 bit
 longwords.&nbsp; The minimum size of a TCP header is 20 bytes (5
 longwords) and the maximum is 60 bytes (15 longwords).&nbsp; This field
 gets its name because it is the offset from the beginning of the header
 to the data.<br>
 <br>
-<h4>dpkt.tcp.off_x2</h4>
-<h4>dpkt.tcp.opts</h4>
+<h4><a class="mozTocH4" name="mozTocId194344"></a>dpkt.tcp.off_x2</h4>
+<h4><a class="mozTocH4" name="mozTocId482140"></a>dpkt.tcp.opts</h4>
 This is a list of options.&nbsp; <span style="color: rgb(255, 0, 0);">Needs
 more detail.</span><br>
 <br>
-<h4>dpkt.tcp.pack</h4>
-<h4>dpkt.tcp.pack_hdr</h4>
-<h4>dpkt.tcp.parse_opts ( tcp.opts )<br>
+<h4><a class="mozTocH4" name="mozTocId853600"></a>dpkt.tcp.pack</h4>
+<h4><a class="mozTocH4" name="mozTocId114488"></a>dpkt.tcp.pack_hdr</h4>
+<h4><a class="mozTocH4" name="mozTocId429391"></a>dpkt.tcp.parse_opts (
+tcp.opts )<br>
 </h4>
 <p>This method parses the TCP options field into a list of (option
 number, option value) tuples.&nbsp; Use the code sequence<br>
@@ -360,19 +404,19 @@ number, option value) tuples.&nbsp; Use the code sequence<br>
 <pre><code>option_list = dpkt.tcp.parse_opts ( tcp.opts )</code><br><br></pre>
 <p>to decode the options<br>
 </p>
-<h4>dpkt.tcp.seq</h4>
+<h4><a class="mozTocH4" name="mozTocId204266"></a>dpkt.tcp.seq</h4>
 A 32 bit unsigned number.&nbsp; If the SYN flag is set, then this is
 the initial sequence number, and all subsequent sequence numbers are
 relative to this number.&nbsp; If the SYN flag is clear, then this
 number is the location of the payload of this sequence in the data
 stream.&nbsp; Note that segment can be delivered out of order, so the
 sequence number is used to get the bytes back in order.dpkt.tcp.sport
-<h4>dpkt.tcp.sum</h4>
+<h4><a class="mozTocH4" name="mozTocId306597"></a>dpkt.tcp.sum</h4>
 <br>
 <br>
-<h4>dpkt.tcp.unpack</h4>
-<h4>dpkt.tcp.urp</h4>
-<h4>dpkt.tcp.win</h4>
+<h4><a class="mozTocH4" name="mozTocId938666"></a>dpkt.tcp.unpack</h4>
+<h4><a class="mozTocH4" name="mozTocId722569"></a>dpkt.tcp.urp</h4>
+<h4><a class="mozTocH4" name="mozTocId182841"></a>dpkt.tcp.win</h4>
 A 16 bit unsigned number.&nbsp; Specifies how far past the current
 sequence number in this acknowlegement the receiver is willing to
 receive.<br>
