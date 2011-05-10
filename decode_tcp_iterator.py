@@ -128,6 +128,7 @@ def decode_tcp(pcap):
         elif not syn_flag and ack_flag :
             sequence_number = tcp.seq
             byte_offset = sequence_number - connection_table[connection_id].isn
+            print flags+" Absolute sequence number %d ISN %d relative sequence number %d" % (sequence_number, connection_table[connection_id].isn, byte_offset)
             connection_table[connection_id].buffer[byte_offset] = tcp.data
             connection_table[connection_id].seq = sequence_number
 # if the push flag is set, then return the string to the caller, along with identifying information so that the
@@ -141,12 +142,12 @@ def main(pc) :
     """This is the outer loop that prints strings that have been captured from the TCP streams, terminated by a packet that
 has the PUSH flag set."""
     for connection_id, received_string in decode_tcp(pc) :
-        print connection_id, received_string               
+        print connection_id_to_str (connection_id, 4), received_string          # This won't work for IPv6
                         
                         
 
 if __name__ == "__main__" :
-    if len(sys.argv[1]) < 2 :
+    if len(sys.argv) < 2 :
         decode_tcp_help()
 # create an interator to return the next packet.  The source can be either an interface using the libpcap library or it can be a file in pcap
 # format such as created by tcpdump.
