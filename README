@@ -11,3 +11,7 @@ The list of packet captures for testing purposes is given in the file
 test_cases.txt, which is a tab-delimited file giving the file name and test
 conditions the file was generated under.
 
+To install dpkt under ubuntu:
+sudo apt-get install python-dpkt
+sudo apt-get install python-libpcap
+
