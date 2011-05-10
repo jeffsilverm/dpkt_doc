@@ -137,6 +137,13 @@ def decode_tcp(pcap):
                 connection_string = assemble_buffer( connection_table[connection_id].buffer )
                 yield ( connection_id, connection_string )
 
+def decode_tcp_help() :
+    print """To run this program, give the command
+python """+sys.argv[0]+""" FILENAME.py INPUT
+where INPUT is either a PCAP file, or eth0: for a wired ethernet or wlan0: for
+a wireless (WiFi) network connection"""
+    sys.exit(1)
+    
 
 def main(pc) :
     """This is the outer loop that prints strings that have been captured from the TCP streams, terminated by a packet that
