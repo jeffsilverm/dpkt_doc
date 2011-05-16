@@ -78,16 +78,172 @@ ubuntu.&nbsp; Find the source code.<br>
 <br>
 <h2>SCTP Stream Control Transmission Protocol</h2>
 Get the source code from <span style="text-decoration: underline;">https://github.com/philpraxis/pysctp.git</span>.&nbsp;
-In order to build the C software, I need the package libsctp-dev, which
+In
+order to build the C software, I need the package libsctp-dev, which
 I installed using synaptic.&nbsp; The installation script puts the file
 <span style="font-family: monospace;">_sctp.</span>h in<span
  style="font-family: monospace;"> /usr/local</span>.&nbsp; It should go
 in <span style="font-family: monospace;">/usr/local/include</span>.&nbsp;
-Fixed that.&nbsp; pysctp comes with two SCTP clients, but no SCTP
+Fixed
+that.&nbsp; pysctp comes with two SCTP clients, but no SCTP
 servers, so it is difficult to test.&nbsp; I sent a message to the
 author of the software, <a href="mailto:phil@p1sec.com">Philippe
 Langlois &lt;Phil __AT__ p1sec.com&gt;</a> .<br>
 <span style="text-decoration: underline;"><br>
 </span><br>
+<h2>An analysis of the file http_ipv4.cap</h2>
+<p>
+I think the decode_tcp_iterator.py file is not doing the sequence
+numbers correctly. The ack numbers that are n/a are because the ACK
+flag is clear.
+</p>
+<table>
+  <tbody>
+    <tr>
+      <th>Packet</th>
+      <th>direction</th>
+      <th>absolute seq num</th>
+      <th>relative seq num</th>
+      <th>absolute ack num</th>
+      <th>relative ack num</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>C-&gt;S</td>
+      <td>988184821</td>
+      <td>0</td>
+      <td>n/a</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>S-&gt;C</td>
+      <td>2171931972</td>
+      <td>1</td>
+      <td>988184822</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>C-&gt;S</td>
+      <td>988184822</td>
+      <td>1</td>
+      <td>2171931972</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>C-&gt;S</td>
+      <td>988184822</td>
+      <td>111</td>
+      <td>2171931972</td>
+      <td>111</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>S-&gt;C</td>
+      <td>2171931973</td>
+      <td>1</td>
+      <td>2171931973</td>
+      <td>111</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>C-&gt;S</td>
+      <td>988184832</td>
+      <td>111</td>
+      <td>2171932883</td>
+      <td>911</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>S-&gt;C</td>
+      <td>2171932883</td>
+      <td>911</td>
+      <td>988184932</td>
+      <td>2339</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>C-&gt;S</td>
+      <td> 988184932<br>
+      </td>
+      <td>911</td>
+      <td>2171934311<br>
+      </td>
+      <td>2339</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">9<br>
+      </td>
+      <td style="vertical-align: top;">S-&gt;C<br>
+      </td>
+      <td style="vertical-align: top;">2171934311<br>
+      </td>
+      <td style="vertical-align: top;">2339<br>
+      </td>
+      <td style="vertical-align: top;">988184932<br>
+      </td>
+      <td style="vertical-align: top;">3391<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">C-&gt;S<br>
+      </td>
+      <td style="vertical-align: top;">988184932<br>
+      </td>
+      <td style="vertical-align: top;">3391<br>
+      </td>
+      <td style="vertical-align: top;">2171935363<br>
+      </td>
+      <td style="vertical-align: top;">111<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11<br>
+      </td>
+      <td style="vertical-align: top;">S-&gt;C (fin)<br>
+      </td>
+      <td style="vertical-align: top;">2171935363<br>
+      </td>
+      <td style="vertical-align: top;">111<br>
+      </td>
+      <td style="vertical-align: top;">988184932<br>
+      </td>
+      <td style="vertical-align: top;">3392<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">12<br>
+      </td>
+      <td style="vertical-align: top;">C-&gt;S (fin)<br>
+      </td>
+      <td style="vertical-align: top;">988184932<br>
+      </td>
+      <td style="vertical-align: top;">3392<br>
+      </td>
+      <td style="vertical-align: top;">2171935364<br>
+      </td>
+      <td style="vertical-align: top;">112<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">13<br>
+      </td>
+      <td style="vertical-align: top;">S-&gt;C<br>
+      </td>
+      <td style="vertical-align: top;">2171935364<br>
+      </td>
+      <td style="vertical-align: top;">3392<br>
+      </td>
+      <td style="vertical-align: top;">988184933<br>
+      </td>
+      <td style="vertical-align: top;">112<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </body>
 </html>
