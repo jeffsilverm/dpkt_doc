@@ -46,10 +46,9 @@ def get_message_segment_size (options ) :
     options_list = dpkt.tcp.parse_opts ( options )
     for option in options_list :
         if option[0] == 2 :
-# The MSS is a 32 bit number.  Look at RFC 793 http://www.rfc-editor.org/rfc/rfc793.txt page 17.  However dpkt decodes it as a 16
-# bit number.  Technically, it doesn't matter, I think, because an MSS is never going to be bigger than 65496 bytes.
-# The most common value is 1460 bytes (IPv4) which 0x05b4 or 1440 bytes (IPv6) which is 0x05a0.  The format string ">H" means
-# big-endian unsigned 16 bit number.  It should be ">L" which is big-endian 32 bit number.
+# The MSS is a 16 bit number.  Look at RFC 793 http://www.rfc-editor.org/rfc/rfc793.txt page 17.  dpkt decodes it as a 16
+# bit number.  An MSS is never going to be bigger than 65496 bytes.
+# The most common value is 1460 bytes (IPv4) which 0x05b4 or 1440 bytes (IPv6) which is 0x05a0.  
             mss = struct.unpack(">H", option[1])
             return mss         
 

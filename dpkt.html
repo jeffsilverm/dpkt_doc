@@ -23,12 +23,13 @@ My documentation on dpkt<br>
 is
 a
 wonderful
-peice
+piece
 of
 software
 but
 it
-has very little documentation,
+has
+very little documentation,
 just some examples about how to use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
@@ -36,20 +37,23 @@ would
 have
 you
 believe
-is obvious is not obvious at all.
+is
+obvious is not obvious at all.
 There are more examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
 parse
 a
 pcap
-file that has HTTP</a> and <a
+file
+that has HTTP</a> and <a
  href="http://jon.oberheide.org/blog/2008/08/25/dpkt-tutorial-1-icmp-echo/">How
 to
 generate
 and
 transmit
-an ICMPv4 packet</a>.
+an
+ICMPv4 packet</a>.
 <p>I am doing this work as a classroom project for <a
  href="http://staff.washington.edu/jon/python-course/course3.html">The
 University of Washington Python Programming class</a>. Most of the
@@ -58,7 +62,8 @@ To
 get
 it,
 give
-the following commands:
+the
+following commands:
 </p>
 <pre>[ps37854]$ <kbd>mkdir dpkt_doc</kbd>
 [ps37854]$ <kbd>cd dpkt_doc</kbd>
@@ -75,11 +80,13 @@ From git://github.com/jeffsilverm/dpkt_doc
 </pre>
 <ol id="mozToc">
 <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
-  <li><a href="#mozTocId305148">dpkt python module </a>
+  <li><a href="#mozTocId305148">dpkt python module
+    </a>
     <ol>
       <li>
         <ol>
-          <li><a href="#mozTocId379436">Files </a></li>
+          <li><a href="#mozTocId379436">Files
+            </a></li>
           <li><a href="#mozTocId552406">Attributes of dpkt</a>
             <ol>
               <li><a href="#mozTocId141081">dpkt.ah</a></li>
@@ -89,7 +96,8 @@ From git://github.com/jeffsilverm/dpkt_doc
               <li><a href="#mozTocId680582">dpkt.dns</a></li>
               <li><a href="#mozTocId815238">dpkt.ethernet</a>
                 <ol>
-                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet </a>
+                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet
+                    </a>
                     <ol>
                       <li><a href="#mozTocId363973">data</a></li>
                       <li><a href="#mozTocId131995">dst</a></li>
@@ -100,25 +108,41 @@ From git://github.com/jeffsilverm/dpkt_doc
                   </li>
                   <li><a href="#mozTocId229731">dpkt.ethernet.dpkt</a></li>
                   <li><a href="#mozTocId303086">dpkt.ethernet.stp</a></li>
-                  <li><a href="#mozTocId451840">dpkt.ethernet.struct </a></li>
+                  <li><a href="#mozTocId451840">dpkt.ethernet.struct
+                    </a></li>
                 </ol>
               </li>
               <li><a href="#mozTocId303989">dpkt.ip</a>
                 <ol>
-                  <li><a href="#mozTocId839997">dpkt.ip.IP </a></li>
-                  <li><a href="#mozTocId685143">dpkt.ip.dpkt </a></li>
+                  <li><a href="#mozTocId839997">dpkt.ip.IP</a></li>
                 </ol>
               </li>
-              <li><a href="#mozTocId741073">dpkt.ip6 </a>
+              <li><a href="#mozTocId842199">dpkt.ip.data
+                </a></li>
+              <li><a href="#mozTocId358143">dpkt.ip.dst</a></li>
+              <li><a href="#mozTocId883199">dpkt.ip.hl</a></li>
+              <li><a href="#mozTocId484635">dpkt.ip.get_proto
+                </a>
                 <ol>
-                  <li><a href="#mozTocId333019">dpkt.ip6.IP6 </a></li>
+                  <li><a href="#mozTocId839997">dpkt.ip.IP
+                    </a></li>
+                  <li><a href="#mozTocId685143">dpkt.ip.dpkt
+                    </a></li>
+                </ol>
+              </li>
+              <li><a href="#mozTocId741073">dpkt.ip6
+                </a>
+                <ol>
+                  <li><a href="#mozTocId333019">dpkt.ip6.IP6
+                    </a></li>
                 </ol>
               </li>
             </ol>
           </li>
           <li><a href="#mozTocId543744">dpkt.pcap</a>
             <ol>
-              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f) </a></li>
+              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f)
+                </a></li>
             </ol>
           </li>
           <li><a href="#mozTocId761132">dpkt.tcp</a>
@@ -133,7 +157,8 @@ From git://github.com/jeffsilverm/dpkt_doc
               <li><a href="#mozTocId853600">dpkt.tcp.pack</a></li>
               <li><a href="#mozTocId114488">dpkt.tcp.pack_hdr</a></li>
               <li><a href="#mozTocId429391">dpkt.tcp.parse_opts (
-tcp.opts )</a></li>
+tcp.opts )
+                </a></li>
               <li><a href="#mozTocId204266">dpkt.tcp.seq</a></li>
               <li><a href="#mozTocId306597">dpkt.tcp.sum</a></li>
               <li><a href="#mozTocId938666">dpkt.tcp.unpack</a></li>
@@ -308,25 +333,31 @@ types, refer to <a
 &gt;&gt;&gt; callable(dpkt.ip.IP)<br>
 True<br>
 &gt;&gt;&gt;<br>
+<pre>'data', 'dst', 'get_proto', 'hl', 'id', 'len', 'off', 'opts', 'p', 'pack', 'pack_hdr', 'set_proto', 'src', 'sum', 'tcp', 'tos', 'ttl', 'unpack', 'v', 'v_hl'<br></pre>
 <br>
-<h4>dpkt.ip.data<br>
-</h4>
+<h5><a class="mozTocH5" name="mozTocId839997"></a>dpkt.ip.IP</h5>
+<p>This constructor can be used to create a packet.&nbsp; I'm not sure
+what to do with a packet once you've created it.<br>
+</p>
+<pre>from dpkt.udp import UDP<br>from dpkt.ip import IP<br>import socket<br><br><br>udp = UDP(data="testing")<br>src=socket.inet_aton("127.0.0.1")<br>dst=socket.inet_aton("67.205.52.141")<br>ip = IP(src=src, dst=dst, data=udp )<br><br>ip<br>IP(src='\x7f\x00\x00\x01', dst='C\xcd4\x8d', data=UDP(data='testing'))<br><br><br><br></pre>
+<h5><a class="mozTocH4" name="mozTocId842199"></a>dpkt.ip.data<br>
+</h5>
 <p>This is the payload of the IP packet<br>
 </p>
-<pre>'data', 'dst', 'get_proto', 'hl', 'id', 'len', 'off', 'opts', 'p', 'pack', 'pack_hdr', 'set_proto', 'src', 'sum', 'tcp', 'tos', 'ttl', 'unpack', 'v', 'v_hl'<br><br></pre>
-<h4>dpkt.ip.dst</h4>
+<pre><br></pre>
+<h5><a class="mozTocH4" name="mozTocId358143"></a>dpkt.ip.dst</h5>
 <p>The destination IPv4 address of the packet.&nbsp; You can convert
 the destination IP address to an ASCII string in dotted quad format
 using the socket package:<br>
 </p>
 <pre>import socket<br>dst_ip_addr_str = socket.inet_ntoa(ip.dst)<br></pre>
-<h4>dpkt.ip.hl</h4>
+<h5><a class="mozTocH4" name="mozTocId883199"></a>dpkt.ip.hl</h5>
 Internet Header Length is the length of the internet header in 32 bit
 words, and thus points to the beginning of the data. Note that the
 minimum value for a correct header is 5.<br>
 <br>
-<h4>dpkt.ip.get_proto<br>
-</h4>
+<h5><a class="mozTocH4" name="mozTocId484635"></a>dpkt.ip.get_proto<br>
+</h5>
 <h5><a class="mozTocH5" name="mozTocId839997"></a>dpkt.ip.IP<br>
 </h5>
 <h5><a class="mozTocH5" name="mozTocId685143"></a>dpkt.ip.dpkt<br>
