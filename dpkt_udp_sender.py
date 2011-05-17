@@ -75,17 +75,7 @@ if __name__ == "__main__" :
     udp_packet = create_udp_packet (destination_ip, destination_port, message_size, ipv6)
 # The udp packet also has the destination IP and port, but sendto needs this information as well.
 # The udp packet needs that information in order to calculate a checksum
-    sock.sendto(udp_packet, (destination_ip, destination_port )
-
-
-
-
-
-
-
-
-
-
+    sock.sendto(udp_packet, (destination_ip, destination_port ) )
 
 
 
