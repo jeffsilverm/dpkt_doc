@@ -55,26 +55,24 @@ def parse_args ( ) :
     return (destination_ip, destination_port, message_size, ipv6)
 
 
-def create_udp_packet (destination_ip, destination_port, message_size, ipv6) :
+def create_udp_packet (destination_port, message_size, ipv6) :
     udp = dpkt.udp.UDP()
     udp.sport = 50004               # UDP source port, doesn't really matter
     udp.dport = destination_port
-    udp.ulen = message_size
+    udp.ulen = message_size + 8		# add 8 because that's the length of the UDP header
     message = message_size * "*"
     udp.data = message
 # Need to calculate a UDP checksum
     return udp.pack()
 
-def createRawIPSocket():
-    sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
+def createRawIPSocket( ipv6 ):
+    sock = socket.socket(socket.AF_INET6 if ipv6 else socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
     return sock
 
 if __name__ == "__main__" :
     (destination_ip, destination_port, message_size, ipv6) = parse_args( )
-    sock = createRawIPSocket()
-    udp_packet = create_udp_packet (destination_ip, destination_port, message_size, ipv6)
-# The udp packet also has the destination IP and port, but sendto needs this information as well.
-# The udp packet needs that information in order to calculate a checksum
+    sock = createRawIPSocket( ipv6 )
+    udp_packet = create_udp_packet ( destination_port, message_size, ipv6)
     sock.sendto(udp_packet, (destination_ip, destination_port ) )
 
 
