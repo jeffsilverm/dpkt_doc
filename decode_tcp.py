@@ -28,8 +28,15 @@ def main(f):
     for ts, buf in pcap:
         packet_cntr += 1
         eth = dpkt.ethernet.Ethernet(buf)
-    # This is simplistic - IP packets can be fragmented    
+# Also, this changes a little bit with IPv6.  To tell the difference between IPv4 and IPv6, you have to look
+# at the ethertype field, which is given by http://www.iana.org/assignments/ethernet-numbers.  IPv4 is 0x800 or 2048
+# and IPv6 is 0x86DD or 34525
+# This is simplistic - IP packets can be fragmented.  Also, this only works for IPv4.  IPv6 has a different Ethertype    
         ip = eth.data
+        if eth.type == dpkt.ethernet.ETH_TYPE_IP :
+            pass
+        elif eth.type == dpkt.ethernet.ETH_TYPE_IP6 :
+            pass
     # This is also simplistic - TCP packets can be fragmented, and also retransmitted
     #
         tcp = ip.data
@@ -73,9 +80,9 @@ def main(f):
     # Also need to think about the RESET flag
             
     f.close()
-    for connection in connection_table.keys() :
-        print "Connection "+ str(connection)
-        print connection_table[connection]
+    for connection_id in connection_table.keys() :
+        print "Connection "+ connection_id_to_str(connection_id)
+        print connection_table[connection_id]
 
         
 
