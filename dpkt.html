@@ -29,8 +29,11 @@ software
 but
 it
 has
-very little documentation,
-just some examples about how to use it.&nbsp; There is a lot more under
+very
+little
+documentation,
+just
+some examples about how to use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
 would
@@ -38,7 +41,10 @@ have
 you
 believe
 is
-obvious is not obvious at all.
+obvious
+is
+not
+obvious at all.
 There are more examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
@@ -46,14 +52,17 @@ parse
 a
 pcap
 file
-that has HTTP</a> and <a
+that
+has
+HTTP</a> and <a
  href="http://jon.oberheide.org/blog/2008/08/25/dpkt-tutorial-1-icmp-echo/">How
 to
 generate
 and
 transmit
 an
-ICMPv4 packet</a>.
+ICMPv4
+packet</a>.
 <p>I am doing this work as a classroom project for <a
  href="http://staff.washington.edu/jon/python-course/course3.html">The
 University of Washington Python Programming class</a>. Most of the
@@ -63,7 +72,8 @@ get
 it,
 give
 the
-following commands:
+following
+commands:
 </p>
 <pre>[ps37854]$ <kbd>mkdir dpkt_doc</kbd>
 [ps37854]$ <kbd>cd dpkt_doc</kbd>
@@ -80,13 +90,11 @@ From git://github.com/jeffsilverm/dpkt_doc
 </pre>
 <ol id="mozToc">
 <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
-  <li><a href="#mozTocId305148">dpkt python module
-    </a>
+  <li><a href="#mozTocId305148">dpkt python module </a>
     <ol>
       <li>
         <ol>
-          <li><a href="#mozTocId379436">Files
-            </a></li>
+          <li><a href="#mozTocId379436">Files </a></li>
           <li><a href="#mozTocId552406">Attributes of dpkt</a>
             <ol>
               <li><a href="#mozTocId141081">dpkt.ah</a></li>
@@ -96,8 +104,7 @@ From git://github.com/jeffsilverm/dpkt_doc
               <li><a href="#mozTocId680582">dpkt.dns</a></li>
               <li><a href="#mozTocId815238">dpkt.ethernet</a>
                 <ol>
-                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet
-                    </a>
+                  <li><a href="#mozTocId79531">dpkt.ethernet.Ethernet </a>
                     <ol>
                       <li><a href="#mozTocId363973">data</a></li>
                       <li><a href="#mozTocId131995">dst</a></li>
@@ -108,8 +115,7 @@ From git://github.com/jeffsilverm/dpkt_doc
                   </li>
                   <li><a href="#mozTocId229731">dpkt.ethernet.dpkt</a></li>
                   <li><a href="#mozTocId303086">dpkt.ethernet.stp</a></li>
-                  <li><a href="#mozTocId451840">dpkt.ethernet.struct
-                    </a></li>
+                  <li><a href="#mozTocId451840">dpkt.ethernet.struct </a></li>
                 </ol>
               </li>
               <li><a href="#mozTocId303989">dpkt.ip</a>
@@ -117,32 +123,25 @@ From git://github.com/jeffsilverm/dpkt_doc
                   <li><a href="#mozTocId839997">dpkt.ip.IP</a></li>
                 </ol>
               </li>
-              <li><a href="#mozTocId842199">dpkt.ip.data
-                </a></li>
+              <li><a href="#mozTocId842199">dpkt.ip.data </a></li>
               <li><a href="#mozTocId358143">dpkt.ip.dst</a></li>
               <li><a href="#mozTocId883199">dpkt.ip.hl</a></li>
-              <li><a href="#mozTocId484635">dpkt.ip.get_proto
-                </a>
+              <li><a href="#mozTocId484635">dpkt.ip.get_proto </a>
                 <ol>
-                  <li><a href="#mozTocId839997">dpkt.ip.IP
-                    </a></li>
-                  <li><a href="#mozTocId685143">dpkt.ip.dpkt
-                    </a></li>
+                  <li><a href="#mozTocId839997">dpkt.ip.IP </a></li>
+                  <li><a href="#mozTocId685143">dpkt.ip.dpkt </a></li>
                 </ol>
               </li>
-              <li><a href="#mozTocId741073">dpkt.ip6
-                </a>
+              <li><a href="#mozTocId741073">dpkt.ip6 </a>
                 <ol>
-                  <li><a href="#mozTocId333019">dpkt.ip6.IP6
-                    </a></li>
+                  <li><a href="#mozTocId333019">dpkt.ip6.IP6 </a></li>
                 </ol>
               </li>
             </ol>
           </li>
           <li><a href="#mozTocId543744">dpkt.pcap</a>
             <ol>
-              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f)
-                </a></li>
+              <li><a href="#mozTocId145523">dpkt.pcap.Reader(f) </a></li>
             </ol>
           </li>
           <li><a href="#mozTocId761132">dpkt.tcp</a>
@@ -157,8 +156,7 @@ From git://github.com/jeffsilverm/dpkt_doc
               <li><a href="#mozTocId853600">dpkt.tcp.pack</a></li>
               <li><a href="#mozTocId114488">dpkt.tcp.pack_hdr</a></li>
               <li><a href="#mozTocId429391">dpkt.tcp.parse_opts (
-tcp.opts )
-                </a></li>
+tcp.opts ) </a></li>
               <li><a href="#mozTocId204266">dpkt.tcp.seq</a></li>
               <li><a href="#mozTocId306597">dpkt.tcp.sum</a></li>
               <li><a href="#mozTocId938666">dpkt.tcp.unpack</a></li>
@@ -185,6 +183,29 @@ from dpkt.Packet</a></li>
 <p>dpkt is an ethernet packet decoding module.&nbsp; It was written by
 Dugsong.<br>
 </p>
+<p>Fundemental to understanding how dpkt works is the fact that it
+decodes single network packets.&nbsp; This has two consequences:<br>
+</p>
+<ul>
+  <li>It cannot deal with fragmentation at the IP level</li>
+  <li>It cannot deal with fragmentation at the TCP level</li>
+</ul>
+<p>For example, if you are doing an HTTP GET operation, then probably
+the
+entire header will fit into 1500 bytes, which is the default message
+transfer unit (MTU) size of an ethernet and most modern wide area
+networks as well.&nbsp; However, if you are doing an HTTP POST
+operation with a lot of data moving from the client browser to the web
+server, dpkt will be able to parse many of the headers but not all of
+them.</p>
+<p>
+These problems I have tried to solve with software that sits on top of
+dpkt's low level interfaces.&nbsp; For example,
+decode_tcp_iterator_2.py implements a crude TCP stack on top of dpkt.<br>
+</p>
+<br>
+<br>
+<p></p>
 <h3><a class="mozTocH3" name="mozTocId379436"></a>Files<br>
 </h3>
 <pre>jeffs@heavy:/usr$ find . -name "*dpkt*" -print<br>./share/doc/python-dpkt<br>./share/pyshared/dpkt<br>./share/pyshared/dpkt/dpkt.py<br>./share/pyshared/dpkt-1.6.egg-info<br>./share/python-support/python-dpkt.public<br>./lib/pymodules/python2.6/dpkt<br>./lib/pymodules/python2.6/dpkt/dpkt.py<br>./lib/pymodules/python2.6/dpkt/dpkt.pyc<br>./lib/pymodules/python2.6/dpkt-1.6.egg-info<br><br></pre>
@@ -210,7 +231,7 @@ tell, dpkt.ah will only work for IPSEC over IPv4.<br>
 <p><br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId329579"></a>dpkt.aim</h4>
-AOL instant messenger<br>
+<p>AOL instant messenger</p>
 <h4><a class="mozTocH4" name="mozTocId496699"></a>dpkt.arp</h4>
 <p>Address resolution protocol.&nbsp; If the ethernet packet has type
 ETH_TYPE_ARP, then an dpkt.ethernet.Ethernet object will have an arp
@@ -254,24 +275,29 @@ Contains the destination address of the ethernet packet as a 6 byte
 strings.<br>
 <br>
 6 Byte Ethernet addresses can be converted to strings in format
-nn:nn:nn:nn:nn:nn with the function <span
- style="font-family: monospace;">jeffs_dpkt.eth_addr_to_str()</span><br>
-<br>
+nn:nn:nn:nn:nn:nn with the code:<br>
+<pre>def add_colons_to_mac( mac_addr ) :<br>    """This function accepts a 12 hex digit string and converts it to a colon separated string"""<br>    s = list()<br>    for i in range(12/2) : 	# mac_addr should always be 12 chars, we work in groups of 2 chars<br>        s.append( mac_addr[i*2:i*2+2] )<br>    r = ":".join(s)		# I know this looks strange, refer to http://docs.python.org/library/stdtypes.html#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange<br>    return r<br><br><br>add_colons_to_mac( binascii.hexlify(arp.sha) )<br><br></pre>
 <br>
 <h6><a class="mozTocH5" name="mozTocId632084"></a>get_type</h6>
-Returns a class which is something from the Ethernet Type field<br>
-<br>
-<pre><br><br>(Pdb) print eth._typesw.keys()<br>[2048, 8192, 34916, 2054, 34827, 33079, 8196, 34525]<br>(Pdb) print eth._typesw.values()<br>[&lt;class 'dpkt.ip.IP'&gt;, &lt;class 'dpkt.cdp.CDP'&gt;, &lt;class<br>'dpkt.pppoe.PPPoE'&gt;, &lt;class 'dpkt.arp.ARP'&gt;, &lt;class<br>'dpkt.ppp.PPP'&gt;, &lt;class 'dpkt.ipx.IPX'&gt;, &lt;class<br>'dpkt.dtp.DTP'&gt;, &lt;class 'dpkt.ip6.IP6'&gt;] <br>(Pdb) print eth.get_type(2048) <br>&lt;class 'dpkt.ip.IP'&gt; <br>(Pdb) print eth.get_type(34525)<br>&lt;class 'dpkt.ip6.IP6'&gt; <br>(Pdb) <br><br></pre>
+<p>Returns a class which is something from the Ethernet Type field</p>
+<pre>(Pdb) print eth._typesw.keys()<br>[2048, 8192, 34916, 2054, 34827, 33079, 8196, 34525]<br>(Pdb) print eth._typesw.values()<br>[&lt;class 'dpkt.ip.IP'&gt;, &lt;class 'dpkt.cdp.CDP'&gt;, &lt;class<br>'dpkt.pppoe.PPPoE'&gt;, &lt;class 'dpkt.arp.ARP'&gt;, &lt;class<br>'dpkt.ppp.PPP'&gt;, &lt;class 'dpkt.ipx.IPX'&gt;, &lt;class<br>'dpkt.dtp.DTP'&gt;, &lt;class 'dpkt.ip6.IP6'&gt;] <br>(Pdb) print eth.get_type(2048) <br>&lt;class 'dpkt.ip.IP'&gt; <br>(Pdb) print eth.get_type(34525)<br>&lt;class 'dpkt.ip6.IP6'&gt; <br>(Pdb) <br></pre>
+<p>Another way to do the same thing is:<br>
+</p>
+<pre>import dpkt<br>eth = dpkt.ethernet.Ethernet()<br>print eth._typesw[2048]<br>&lt;class 'dpkt.ip.IP'&gt;<br>print eth._typesw[34525]<br>&lt;class 'dpkt.ip6.IP6'&gt;<br>print eth._typesw[33079]<br>&lt;class 'dpkt.ipx.IPX'&gt;<br></pre>
 <h6><a class="mozTocH5" name="mozTocId106331"></a>src</h6>
-Contains the source address of the ethernet packet as a 6 byte string.<br>
+<p>Contains the source address of the ethernet packet as a 6 byte
+string.&nbsp; To decode to ASCII, <a href="mozTocId131995">see dst</a>,
+above.<br>
+</p>
 <br>
 <h6><a class="mozTocH5" name="mozTocId632454"></a>type</h6>
-Returns the Ethernet type.&nbsp; For example, type 2048 (0x0800) is
+<p>Returns the Ethernet type.&nbsp; For example, type 2048 (0x0800) is
 IPv4 and 34525 (0x86DD) is IPv6.&nbsp; For a complete list of Ethernet
 types, refer to <a
- href="http://www.iana.org/assignments/ethernet-numbers">http://www.iana.org/assignments/ethernet-numbers</a><br>
-<br>
-<br>
+ href="http://www.iana.org/assignments/ethernet-numbers">http://www.iana.org/assignments/ethernet-numbers</a>
+To get a list of ethernet types that are supported by dpkt, refer to
+the code at <a href="#mozTocId632084">get_type</a>.<br>
+</p>
 <br>
 <h5><a class="mozTocH5" name="mozTocId229731"></a>dpkt.ethernet.dpkt</h5>
 ['Error', 'NeedData', 'PackError', 'Packet', 'UnpackError',
@@ -336,8 +362,7 @@ True<br>
 <pre>'data', 'dst', 'get_proto', 'hl', 'id', 'len', 'off', 'opts', 'p', 'pack', 'pack_hdr', 'set_proto', 'src', 'sum', 'tcp', 'tos', 'ttl', 'unpack', 'v', 'v_hl'<br></pre>
 <br>
 <h5><a class="mozTocH5" name="mozTocId839997"></a>dpkt.ip.IP</h5>
-<p>This constructor can be used to create a packet.&nbsp; I'm not sure
-what to do with a packet once you've created it.<br>
+<p>This constructor can be used to create a packet.&nbsp;&nbsp; <br>
 </p>
 <pre>from dpkt.udp import UDP<br>from dpkt.ip import IP<br>import socket<br><br><br>udp = UDP(data="testing")<br>src=socket.inet_aton("127.0.0.1")<br>dst=socket.inet_aton("67.205.52.141")<br>ip = IP(src=src, dst=dst, data=udp )<br><br>ip<br>IP(src='\x7f\x00\x00\x01', dst='C\xcd4\x8d', data=UDP(data='testing'))<br><br><br><br></pre>
 <h5><a class="mozTocH4" name="mozTocId842199"></a>dpkt.ip.data<br>
@@ -352,9 +377,10 @@ using the socket package:<br>
 </p>
 <pre>import socket<br>dst_ip_addr_str = socket.inet_ntoa(ip.dst)<br></pre>
 <h5><a class="mozTocH4" name="mozTocId883199"></a>dpkt.ip.hl</h5>
-Internet Header Length is the length of the internet header in 32 bit
+<p>Internet Header Length is the length of the internet header in 32
+bit
 words, and thus points to the beginning of the data. Note that the
-minimum value for a correct header is 5.<br>
+minimum value for a correct header is 5.</p>
 <br>
 <h5><a class="mozTocH4" name="mozTocId484635"></a>dpkt.ip.get_proto<br>
 </h5>
@@ -380,7 +406,74 @@ minimum value for a correct header is 5.<br>
 &gt;&gt;&gt; <br>
 &gt;&gt;&gt; callable(dpkt.ip6.IP6)<br>
 True<br>
+'data', 'dst', 'fc', 'flow', 'get_proto', 'hlim', 'icmp6', 'nxt',
+'pack', 'pack_hdr', 'plen', 'set_proto', 'src', 'unpack', 'v',
+'v_fc_flow'<br>
+<h6>dpkt.ip6.data</h6>
+<p>This is the payload of the packet.&nbsp; Depending on ip6.nxt, this
+will be UDP, TCP, or similar.&nbsp; dpkt magically casts this into the
+proper datatype.<br>
+</p>
+<h6>dpkt.ip6.dst<br>
+</h6>
+<p>This is the destination IPv6 address, 128 bits.&nbsp; To create a
+packed IPv6 address from an ASCII string:<br>
+</p>
+<pre>import socket<br>dst_addr = socket.inet_pton(socket.AF_INET6, "2001:1938:26f:1:204:4bff:0:1")<br><br></pre>
+<h6>dpkt.ip6.fc</h6>
+<h6>dpkt.ip6.flow</h6>
+<p>IPv6 defines a optimization called a "flow".&nbsp; If a router sees
+a packet with a non-zero flow for the first time, it makes its routing
+decision and stores that decision in a fast hash table.&nbsp; Then when
+subsequent packets come by with the same flow, the router can makes its
+routing decision faster.&nbsp; The flow is initialized by a random
+number generator on the host that is originating the connection.&nbsp;
+It can be left 0.<br>
+</p>
 <br>
+<h6>dpkt.ip6.get_proto</h6>
+<h6>dpkt.ip6.hlim</h6>
+<p>The hop limit.&nbsp; Each time the packet hops from router to
+router, this field is decremented by 1.&nbsp; When the hlim reaches 0,
+the packet is discarded, and an ICMP6 type 3 packet is sent to the
+sender.&nbsp; tracepath6 uses this field to probe the path to a
+destination.&nbsp; It sends a packet with a small hlim.&nbsp; When the
+router decrements the hlim to zero and sends back the ICMPv6 packet to
+the sender, tracepath6 records the source address of the ICMPv6 packet
+and knows the IP address of the router.<br>
+</p>
+<br>
+<h6>dpkt.ip6.icmp6</h6>
+<h6>dpkt.ip6.nxt</h6>
+<p>The next header type.&nbsp; If there is no next header, then the
+protocol of the next level in the stack.&nbsp; Typical values are 6 for
+TCP, 17 for UDP, 58 for ICMPv6, 132 for SCTP.&nbsp; For a list of
+protocols, see <a
+ href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml">http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml</a><br>
+</p>
+<h6>dpkt.ip6.pack</h6>
+<h6>dpkt.ip6.pack_hdr</h6>
+<h6>dpkt.ip6.plen</h6>
+<p>The payload length, not counting the IPv6 header.&nbsp; This is a 16
+bit unsigned number.<br>
+</p>
+<h6>dpkt.ip6.set_proto</h6>
+<h6>dpkt.ip6.src</h6>
+<p>The source IPv6 address, which is 128 bits long.&nbsp; To decode the
+IPv6 address into an ASCII string comprehensible by humans, use the
+socket.inet_ntop method:<br>
+</p>
+<pre>import socket<br>import dpkt<br>eth = dpkt.ethernet.Ethernet(buf)<br>ip = eth.data<br>dst_ip_addr_str = socket.inet_ntop(AF_INET6, ip.dst)<br>print dst_ip_addr_str<br></pre>
+<p>This will give an output that looks like:
+2001:1938:26f:1:204:4bff:0:1</p>
+<h6>dpkt.ip6.unpack</h6>
+<h6>dpkt.ip6.v</h6>
+<p>This is the version of IP, which must be 6.&nbsp; If the ethernet
+type is 34525 and this is not 6, then throw an exception because
+something is wrong.<br>
+</p>
+<h6>dpkt.ip6.v_fc_flow
+</h6>
 <h3><a class="mozTocH3" name="mozTocId543744"></a>dpkt.pcap</h3>
 ['DLT_ARCNET', 'DLT_AX25', 'DLT_CHAOS', 'DLT_EN10MB', 'DLT_EN3MB',
 'DLT_FDDI', 'DLT_IEEE802', 'DLT_LINUX_SLL', 'DLT_LOOP', 'DLT_NULL',
@@ -398,9 +491,9 @@ complete packet.&nbsp; For example:<br>
 </p>
 <pre><code>#!/usr/bin/env python<br># -*- coding: utf-8 -*-<br><br>import dpkt<br>import sys <br><br><br>f = open(sys.argv[1])<br>pcap = dpkt.pcap.Reader(f)<br>frame_counter = 0<br>for ts, buf in pcap:<br>    frame_counter += 1<br>    if frame_counter &gt; 1 :<br>        print "%d: %f %f" % ( frame_counter, ts, ts - last_time )<br>    last_time = ts<br><br>f.close()</code><br><br></pre>
 <h3><a class="mozTocH3" name="mozTocId761132"></a>dpkt.tcp</h3>
-TCP is a reliable, stream oriented protocol.&nbsp; Refer to <a
+<p>TCP is a reliable, stream oriented protocol.&nbsp; Refer to <a
  href="http://tools.ietf.org/html/rfc793">RFC 793</a> for more
-information.<br>
+information.</p>
 <br>
 <h4><a class="mozTocH4" name="mozTocId822030"></a>dpkt.tcp.ack</h4>
 <p>This is the last byte that the receiver has received.&nbsp; The
@@ -420,18 +513,20 @@ bytes, so the maximum length of a TCP segment is 1460 bytes for IPv4
 and 1440 bytes for IPv6.<br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId213737"></a>dpkt.tcp.dport</h4>
-<p>The destination port of the packet, a 16 bit unsigned number.<br>
+<p>The destination port of the packet, a 16 bit unsigned number.&nbsp;
+For a list of well known destination ports, refer to <a
+ href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a><br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId470551"></a>dpkt.tcp.flags</h4>
-The TCP flags.&nbsp; To decode them, use the following code:<br>
+<p>The TCP flags.&nbsp; To decode them, use the following code:</p>
 <pre><code>            fin_flag = ( tcp.flags &amp; dpkt.tcp.TH_FIN ) != 0<br>            syn_flag = ( tcp.flags &amp; dpkt.tcp.TH_SYN ) != 0<br>            rst_flag = ( tcp.flags &amp; dpkt.tcp.TH_RST ) != 0<br>            psh_flag = ( tcp.flags &amp; dpkt.tcp.TH_PUSH) != 0<br>            ack_flag = ( tcp.flags &amp; dpkt.tcp.TH_ACK ) != 0<br>            urg_flag = ( tcp.flags &amp; dpkt.tcp.TH_URG ) != 0<br>            ece_flag = ( tcp.flags &amp; dpkt.tcp.TH_ECE ) != 0<br>            cwr_flag = ( tcp.flags &amp; dpkt.tcp.TH_CWR ) != 0</code><br></pre>
 <br>
 <h4><a class="mozTocH4" name="mozTocId754111"></a>dpkt.tcp.off</h4>
-4 bits.&nbsp; Specifies the size of the TCP header in 32 bit
+<p>4 bits.&nbsp; Specifies the size of the TCP header in 32 bit
 longwords.&nbsp; The minimum size of a TCP header is 20 bytes (5
 longwords) and the maximum is 60 bytes (15 longwords).&nbsp; This field
 gets its name because it is the offset from the beginning of the header
-to the data.<br>
+to the data.</p>
 <br>
 <h4><a class="mozTocH4" name="mozTocId194344"></a>dpkt.tcp.off_x2</h4>
 <h4><a class="mozTocH4" name="mozTocId482140"></a>dpkt.tcp.opts</h4>
@@ -448,24 +543,30 @@ tcp.opts )<br>
 number, option value) tuples.&nbsp; Use the code sequence<br>
 </p>
 <pre><code>option_list = dpkt.tcp.parse_opts ( tcp.opts )</code><br><br></pre>
-<p>to decode the options<br>
+<p>to decode the options.&nbsp; For a fully worked, example, see the
+get_message_segment_size method in <a href="decode_tcp_iterator_2.py">decode_tcp_iterator_2.py</a>.<br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId204266"></a>dpkt.tcp.seq</h4>
-A 32 bit unsigned number.&nbsp; If the SYN flag is set, then this is
+<p>A 32 bit unsigned number.&nbsp; If the SYN flag is set, then this is
 the initial sequence number, and all subsequent sequence numbers are
 relative to this number.&nbsp; If the SYN flag is clear, then this
 number is the location of the payload of this sequence in the data
 stream.&nbsp; Note that segment can be delivered out of order, so the
-sequence number is used to get the bytes back in order.dpkt.tcp.sport
+sequence number is used to get the bytes back in order.<br>
+</p>
+<h4>dpkt.tcp.sport
+</h4>
 <h4><a class="mozTocH4" name="mozTocId306597"></a>dpkt.tcp.sum</h4>
 <br>
 <br>
 <h4><a class="mozTocH4" name="mozTocId938666"></a>dpkt.tcp.unpack</h4>
 <h4><a class="mozTocH4" name="mozTocId722569"></a>dpkt.tcp.urp</h4>
 <h4><a class="mozTocH4" name="mozTocId182841"></a>dpkt.tcp.win</h4>
-A 16 bit unsigned number.&nbsp; Specifies how far past the current
+<p>A 16 bit unsigned number.&nbsp; Specifies how far past the current
 sequence number in this acknowlegement the receiver is willing to
-receive.<br>
+receive.</p>
+<h3>dpkt.udp</h3>
+<br>
 <br>
 <h2><a class="mozTocH2" name="mozTocId874488"></a>Classes that inherit
 from dpkt.Packet</h2>
