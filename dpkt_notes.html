@@ -79,13 +79,17 @@ ubuntu.&nbsp; Find the source code.<br>
 <h2>SCTP Stream Control Transmission Protocol</h2>
 Get the source code from <span style="text-decoration: underline;">https://github.com/philpraxis/pysctp.git</span>.&nbsp;
 In
-order to build the C software, I need the package libsctp-dev, which
+order
+to
+build the C software, I need the package libsctp-dev, which
 I installed using synaptic.&nbsp; The installation script puts the file
 <span style="font-family: monospace;">_sctp.</span>h in<span
  style="font-family: monospace;"> /usr/local</span>.&nbsp; It should go
 in <span style="font-family: monospace;">/usr/local/include</span>.&nbsp;
 Fixed
-that.&nbsp; pysctp comes with two SCTP clients, but no SCTP
+that.&nbsp;
+pysctp
+comes with two SCTP clients, but no SCTP
 servers, so it is difficult to test.&nbsp; I sent a message to the
 author of the software, <a href="mailto:phil@p1sec.com">Philippe
 Langlois &lt;Phil __AT__ p1sec.com&gt;</a> .<br>
@@ -245,5 +249,25 @@ flag is clear.
     </tr>
   </tbody>
 </table>
+<h2>Troubles decoding IPv6</h2>
+I am having troubles getting a capture file that contains IPv6
+packets.&nbsp; I think that the files from tcpdump have a disagreement
+with libpcap about something:<br>
+<br>
+<pre>jeffs@heavy:~/python/PythonClass/dpkt_doc$ <kbd>python -m pdb decode_tcp_iterator_2.py http_ipv6.cap</kbd> <br>&gt; /home/jeffs/python/PythonClass/dpkt_doc/decode_tcp_iterator_2.py(5)&lt;module&gt;()<br>-&gt; import dpkt<br>(Pdb) c<br>Traceback (most recent call last):<br>  File "/usr/lib/python2.6/pdb.py", line 1285, in main<br>    pdb._runscript(mainpyfile)<br>  File "/usr/lib/python2.6/pdb.py", line 1204, in _runscript<br>    self.run(statement)<br>  File "/usr/lib/python2.6/bdb.py", line 368, in run<br>    exec cmd in globals, locals<br>  File "&lt;string&gt;", line 1, in &lt;module&gt;<br>  File "decode_tcp_iterator_2.py", line 159, in &lt;module&gt;<br>    pc = dpkt.pcap.Reader ( open(sys.argv[1] ) )    # file interface<br>  File "dpkt/pcap.py", line 105, in __init__<br>    self.dloff = dltoff[self.__fh.linktype]<br>KeyError: 101<br>Uncaught exception. Entering post mortem debugging<br>Running 'cont' or 'step' will restart the program<br>&gt; /home/jeffs/python/PythonClass/dpkt_doc/dpkt/pcap.py(105)__init__()<br>-&gt; self.dloff = dltoff[self.__fh.linktype]<br>(Pdb) <kbd>print self.__fh.linktype</kbd><br>*** AttributeError: 'Reader' object has no attribute '__fh'<br>(Pdb) print self.__fh.linktype<br>*** AttributeError: 'Reader' object has no attribute '__fh'<br>(Pdb) <br><br></pre>
+If I use a capture file from wireshark, it gets past this point, but
+then it has a bad value for the ethertype:<br>
+<br>
+<pre>jeffs@heavy:~/python/PythonClass/dpkt_doc$ python -m pdb decode_tcp_iterator_2.py http_ipv6_wireshark_2.cap <br>&gt; /home/jeffs/python/PythonClass/dpkt_doc/decode_tcp_iterator_2.py(5)&lt;module&gt;()<br>-&gt; import dpkt<br>(Pdb) list 72<br> 67  	        eth = dpkt.ethernet.Ethernet(buf)<br> 68  	# Also, this changes a little bit with IPv6.  To tell the difference between IPv4 and IPv6, you have to look<br> 69  	# at the ethertype field, which is given by http://www.iana.org/assignments/ethernet-numbers.  IPv4 is 0x800 or 2048<br> 70  	# and IPv6 is 0x86DD or 34525<br> 71  	# This is simplistic - IPv4 packets can be fragmented.  Also, this only works for IPv4.  IPv6 has a different Ethertype    <br> 72  	        if eth.type == dpkt.ethernet.ETH_TYPE_IP :<br> 73  	            ip = eth.data<br> 74  	            if ip.v != 4 :<br> 75  	                raise ValueError, "In packet %d, the ether type is IPv4 but the IP version number is %d not 4" % (<br> 76  	                    packet_cntr, ip.v )<br> 77  	           # Deal with IP fragmentation here<br>(Pdb) break 72<br>Breakpoint 1 at /home/jeffs/python/PythonClass/dpkt_doc/decode_tcp_iterator_2.py:72<br>(Pdb) c<br>counter	src prt	dst prt	flags<br>&gt; /home/jeffs/python/PythonClass/dpkt_doc/decode_tcp_iterator_2.py(72)decode_tcp()<br>-&gt; if eth.type == dpkt.ethernet.ETH_TYPE_IP :<br>(Pdb) print eth.type<br>129<br>(Pdb) print dpkt.ethernet.ETH_TYPE_IP<br>2048<br>(Pdb) print dpkt.ethernet.ETH_TYPE_IP6<br>34525<br>(Pdb) <br><br></pre>
+<p>I think this is a bug in wireshark, because in the packet decoding
+process, it says that there is no information available for the link
+layer.&nbsp; Wireshark recognizes that the packet is IPv6.&nbsp; 129 is
+in the range of the IEEE802.3 length field, so the problem may be that
+this is an IEEE802.3 packet and not an Ethernet packet.&nbsp; I am also
+doing the packet capture from the sixxs device.<br>
+<br>
+</p>
+<p>
+</p>
 </body>
 </html>
