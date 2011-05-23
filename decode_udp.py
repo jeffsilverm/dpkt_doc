@@ -6,7 +6,7 @@ import dpkt
 import sys
 import socket
 import pcap
-import subprocess
+
 
 
 
@@ -21,18 +21,19 @@ def decode_udp ( pc ) :
 # This doesn't deal with IP fragments                
                 udp = ip.data
                 # Pass the IP addresses, source port, destination port, and data back to the caller.
-                yield ( ip.src, udp.sport, ip.dst, udp.dport, udp.data)
-
+                yield ( ip.src, udp.sport, ip.dst, udp.dport, udp.data, ip.v)
+        elif eth.type == dpkt.ethernet.ETH_TYPE_IP6 :
+            ip = eth.data
+            if ip.nxt == dpkt.ip.IP_PROTO_UDP :
+# This doesn't deal with IP fragments                
+                udp = ip.data
+                # Pass the IP addresses, source port, destination port, and data back to the caller.
+                yield ( ip.src, udp.sport, ip.dst, udp.dport, udp.data, ip.v)
+        else :
+# If the packet is something else, then I need to figure out a better way of handling it.
+            pass
             
 def main() :
-# This code allows this program to run equally well on my laptop and my desktop.  I did it this
-# way to demonstrate different interface names.  If I was really clever, I'd figure out how to do  this
-# under MS-Windows 
-#    hostname = subprocess.Popen("hostname", stdout=subprocess.PIPE).communicate()[0]
-#    if hostname == 'jeffs-laptop\n' :
-#        pc = pcap.pcap('wlan0', promisc=True)       # set up for packet capture
-#    else:
-#        pc = pcap.pcap('eth0', promisc=True)
     if sys.argv[1] == "-i" :
         pc = pcap.pcap( sys.argv[2] )
     elif sys.argv[1] == "-f" :
@@ -42,8 +43,12 @@ def main() :
 Use -f FILENAME to read a packet capture file"""
         sys.exit(2)
 
-    for src, sport, dst, dport, data in decode_udp( pc ) :
-        print "from ", socket.inet_ntoa(src),":",sport, " to ", socket.inet_ntoa(dst),":",dport
+    for src, sport, dst, dport, data, ip_version in decode_udp( pc ) :
+        if ip_version == 4 :
+            print "from ", socket.inet_ntoa(src),":",sport, " to ", socket.inet_ntoa(dst),":",dport
+        else :
+            print "from ", socket.inet_ntop(AF_INET6, src),".",sport, " to ", socket.inet_ntop(AF_INET6, dst), ".", dport
+
 
 
 if __name__ == "__main__" :
