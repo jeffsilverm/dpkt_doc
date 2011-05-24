@@ -33,7 +33,8 @@ very
 little
 documentation,
 just
-some examples about how to use it.&nbsp; There is a lot more under
+some
+examples about how to use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
 would
@@ -44,7 +45,8 @@ is
 obvious
 is
 not
-obvious at all.
+obvious
+at all.
 There are more examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
@@ -235,9 +237,56 @@ tell, dpkt.ah will only work for IPSEC over IPv4.<br>
 <h4><a class="mozTocH4" name="mozTocId496699"></a>dpkt.arp</h4>
 <p>Address resolution protocol.&nbsp; If the ethernet packet has type
 ETH_TYPE_ARP, then an dpkt.ethernet.Ethernet object will have an arp
-attribute.&nbsp; Refer to <a href="decode.py">decode_arp.py</a>.<br>
-<br>
+attribute.&nbsp; Refer to <a href="decode.py">decode_arp.py</a>.</p>
+<h5>dpkt.arp.data</h5>
+<h5>dpkt.arp.hln</h5>
+<p>The length of the hardware address.&nbsp; For Ethernet, this is 6
+bytes.<br>
 </p>
+<h5>', 'hrd', <br>
+</h5>
+<h5>dpkt.arp.op</h5>
+<p>The operation.&nbsp; 1=request, 2=reply<br>
+</p>
+<h5>, 'pack', 'pack_hdr'</h5>
+<h5>dpkt.arp.pln</h5>
+<p>The protocol address length.&nbsp; For IPv4, this is 4.<br>
+</p>
+<h5>dpkt.arp.pro</h5>
+<p>The upper layer protocol for which the ARP request is intended. For
+IPv4, this has the value 0x0800. The permitted&nbsp; values share a
+numbering space with those for ethertype.<span
+ style="text-decoration: underline;"></span><a
+ href="http://en.wikipedia.org/wiki/Ethertype" title="Ethertype"
+ class="mw-redirect"
+ style="text-decoration: none; color: rgb(6, 69, 173); background-image: none;"><br>
+</a></p>
+<h5>dpkt.arp.sha</h5>
+<p>The source hardware address.&nbsp; This should be the same as the
+source ethernet address but doesn't have to be.<br>
+</p>
+<h5>dpkt.arp.spa</h5>
+<p>The source protocol address.&nbsp; This will usually be an IPv4
+address.&nbsp; You will never see an IPv6 address here, because IPv6
+uses neighbor discovery protocol.<br>
+</p>
+<h5>dpkt.arp.tha</h5>
+<p>The target hardware address.&nbsp; In an ARP request, this will be
+0.&nbsp; In an ARP reply, it should be the same as the Ethernet source
+address, but it doesn't have to be.&nbsp; You don't see this very often
+any more, but there used to be ARP servers which would supply ARP
+replies for hosts too dumb to provide their own ARP replies.&nbsp; You
+can also use this field to poison an ARP cache.<br>
+</p>
+<h5>dpt.arp.tpa</h5>
+<p>The target protocol address.&nbsp; This is the address that ARP is
+going to translate into a MAC address.&nbsp; The IPv4 hosts in the
+network listen for ARP requests, which are sent to the broadcast
+Ethernet address.&nbsp; When a host sees its own IP address in the tpa
+field, it knows it has to reply with an ARP reply.<br>
+</p>
+<br>
+<h5>dpkt.arp.unpack</h5>
 <br>
 <h4><a class="mozTocH4" name="mozTocId109023"></a>dpkt.array</h4>
 <br>
