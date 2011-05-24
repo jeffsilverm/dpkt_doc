@@ -41,6 +41,8 @@ Use -f FILENAME to read a packet capture file"""
         # parse the packet.  Because the filter allows only ARP packets through, we don't have to decode the ethertype
         eth = dpkt.ethernet.Ethernet(pkt)
         arp = eth.arp
+        print "From: ",add_colons_to_mac( binascii.hexlify(eth.src)),
+        print " to: ", add_colons_to_mac( binascii.hexlify(eth.dst))	# Ethernet destination addresses may be broadcast addresses
     #    print arp.hrd
     #    print arp.pro
         if arp.op==1 :
