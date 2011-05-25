@@ -308,7 +308,17 @@ transfer.&nbsp; Many of the values in these fields come from <a
  href="http://www.iana.org/assignments/dns-parameters">IANA</a>.<br>
 </p>
 <h5>dpkt.dns.an</h5>
-<p>A list of answers.&nbsp; For a DNS query, this is an empty list.<br>
+<p>A list of answers.&nbsp; Each answer is an RR record.&nbsp; For a
+DNS query, this is an empty list.<br>
+</p>
+<h6>cls<br>
+</h6>
+<h6>cname</h6>
+<p>This is the canonical name of the thing being looked up.&nbsp; The
+response will be applicable to this cname.<br>
+</p>
+<h6>name</h6>
+<p>The name that was looked up.<br>
 </p>
 <br>
 <h5>dpkt.dns.ar</h5>
