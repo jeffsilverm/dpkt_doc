@@ -34,7 +34,8 @@ little
 documentation,
 just
 some
-examples about how to use it.&nbsp; There is a lot more under
+examples
+about how to use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
 would
@@ -46,7 +47,8 @@ obvious
 is
 not
 obvious
-at all.
+at
+all.
 There are more examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
@@ -300,8 +302,53 @@ field, it knows it has to reply with an ARP reply.<br>
 'data', 'get_opcode', 'get_qr', 'get_rcode', 'id', 'ns', 'op',
 'opcode', 'pack', 'pack_hdr', 'pack_q', 'pack_rr', 'qd', 'qr', 'rcode',
 'set_opcode', 'set_qr', 'set_rcode', 'unpack', 'unpack_q', 'unpack_rr']<br>
+<p>In general, DNS runs on top of UDP.&nbsp; DNS can run on top of TCP
+and will do so if the query is large and also if there is a zone
+transfer.&nbsp; Many of the values in these fields come from <a
+ href="http://www.iana.org/assignments/dns-parameters">IANA</a>.<br>
+</p>
+<h5>dpkt.dns.an</h5>
+<p>A list of answers.&nbsp; For a DNS query, this is an empty list.<br>
+</p>
 <br>
+<h5>dpkt.dns.ar</h5>
+<h5>dpkt.dns.data</h5>
+<h5>dpkt.dns.get_opcode</h5>
+<h5>dpkt.dns.get_qr</h5>
+<h5>dpkt.dns.get_rcode</h5>
+<h5>dpkt.dns.id</h5>
+<p>The ID field is set by the DNS resolver when it makes a query.&nbsp;
+The ID field is also set by the nameserver when it responds to the
+query.&nbsp; That way, the resolver knows which query the response is
+in response to.<br>
+</p>
 <br>
+<h5>dpkt.dns.ns</h5>
+<h5>dpkt.dns.op</h5>
+<h5>dpkt.dns.opcode</h5>
+<p>The opcode is 0&nbsp; a standard query (QUERY), 1 an inverse query
+(IQUERY) (obsoleted by RFC 3425),&nbsp; 2&nbsp;&nbsp; a server status
+request (STATUS), 3 is unassigned, 4 is Notify (RFC&nbsp; 1996), 5 is
+update, defined by RFC 2136<br>
+</p>
+<br>
+<h5>dpkt.dns.pack</h5>
+<h5>dpkt.dns.pack_hdr </h5>
+<h5>dpkt.dns.pack_q<br>
+</h5>
+<h5>dpkt.dns.pack_rr</h5>
+<h5>dpkt.dns.qd</h5>
+<h5>dpkt.dns.qr</h5>
+<p>qr is 0 if this message is a query and 1 if this message is a
+response.<br>
+</p>
+<br>
+<h5>dpkt.dns.rcode</h5>
+<h5>dpkt.dns.set_opcode</h5>
+<h5>dpkt.dns.set_qr</h5>
+<h5>dpkt.dns.set_rcode</h5>
+<h5>dpkt.dns.unpack</h5>
+<h5>dpkt.dns.unpack_rr</h5>
 <h4><a class="mozTocH4" name="mozTocId815238"></a>dpkt.ethernet</h4>
 'ETH_CRC_LEN', 'ETH_HDR_LEN', 'ETH_LEN_MAX', 'ETH_LEN_MIN', 'ETH_MIN',
 'ETH_MTU', 'ETH_TYPE_8021Q', 'ETH_TYPE_ARP', 'ETH_TYPE_CDP',
