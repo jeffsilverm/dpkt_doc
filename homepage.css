@@ -1,0 +1,42 @@
+/* -- add   
+
+<link rel=stylesheet type="text/css" href="homepage.css">
+
+to the header section of the HTML file to reference this */
+             BODY { background: white; color: black}
+             A:link { color: red }
+             A:visited { color: maroon }
+             A:active { color: fuchsia }
+             H1.myclass {border-width: thin; border: solid; text-align: center}
+             H1, .h1 { font-size: 36pt; font-weight: bold; background: #ffdcdc; margin-left: 18pt }
+             H2, .h2 { font-size: 30pt; font-weight: bold; background: #ffffcc; margin-left: 36pt }
+             H3, .h3 { font-size: 24pt; font-weight: bold; background: #ccffcc; margin-left: 54pt }
+             H4, .h4 { font-size: 20pt; font-weight: bold; background: #ccffff; margin-left: 72pt }
+             H5, .h5 { font-size: 16pt; font-weight: bold; background: #ccccff; margin-left: 72pt }
+             H6, .h6 { font-size: 14pt; font-weight: bold; background: #cccccc; margin-left: 90pt }
+             P { background: #fefefe; text-indent: 5em }
+             .sat { background: #c0ffc0 }
+             .sun { background: #c0c0ff }
+	     .wkd { background: #e0e0e0 }
+             .hol { background: #ffffc0 }
+             .toc { background: #ffc0c0 }
+	code, samp, kbd, var { white-space: pre; font-size: 10pt; }
+	samp { background: #fefeff; }
+	kbd { text-decoration: underline; }
+	var { font-style: italic; }
+/*	kbd { white-space: pre; text-decoration: underline; font-size: 10pt; }	*/
+        .appointments { color: red; background: #f0f0f0 }
+        .important { background: #00ff00 }
+	.tbd { color: white; background: red }
+	.inferred { color: blue; background: yellow }
+	OL        { list-style-type: decimal }      /* 1 2 3 4 5 etc. */
+	OL OL     { list-style-type: upper-alpha }  /* A B C D E etc. */
+	OL OL OL  { list-style-type: decimal } 
+	OL OL OL OL { list-style-type: lower-roman }  /* i ii iii iv v etc. */
+	OL OL OL OL OL     { list-style-type: lower-alpha }  /* a b c d e etc. */
+        .hotthought {border-width: thin; border: solid; color: red }
+	.thought { color: red }
+	.caution { border-width: thin; border: dashed; color: blue }
+	.warning { border-width: medium; border: double; color: red }
+	.button { border-width: thin; border: solid; background: #f0f0fc }
+
