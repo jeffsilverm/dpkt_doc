@@ -37,7 +37,8 @@ some
 examples
 about
 how
-to use it.&nbsp; There is a lot more under
+to
+use it.&nbsp; There is a lot more under
 the hood then the examples would have you believe.&nbsp; What the
 author, <a href="http://code.google.com/u/jon.oberheide/">Jon Oberheide</a>,
 would
@@ -53,7 +54,8 @@ at
 all.
 There
 are
-more examples showing <a
+more
+examples showing <a
  href="http://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">how
 to
 parse
@@ -464,14 +466,14 @@ dpkt.ethernet.Ethernet has attributes 'data', 'dst', 'get_type', 'ip',
 'pack', 'pack_hdr', 'set_type', 'src', 'type', 'unpack']<br>
 <br>
 <h6><a class="mozTocH6" name="mozTocId363973"></a>data</h6>
-Contains the data payload of the ethernet packet.<br>
+<p>Contains the data payload of the ethernet packet.</p>
 <br>
 <h6><a class="mozTocH5" name="mozTocId131995"></a>dst</h6>
-Contains the destination address of the ethernet packet as a 6 byte
-strings.<br>
+<p>Contains the destination address of the ethernet packet as a 6 byte
+strings.</p>
 <br>
-6 Byte Ethernet addresses can be converted to strings in format
-nn:nn:nn:nn:nn:nn with the code:<br>
+<p>6 Byte Ethernet addresses can be converted to strings in format
+nn:nn:nn:nn:nn:nn with the code:</p>
 <pre>def add_colons_to_mac( mac_addr ) :<br>    """This function accepts a 12 hex digit string and converts it to a colon separated string"""<br>    s = list()<br>    for i in range(12/2) : 	# mac_addr should always be 12 chars, we work in groups of 2 chars<br>        s.append( mac_addr[i*2:i*2+2] )<br>    r = ":".join(s)		# I know this looks strange, refer to http://docs.python.org/library/stdtypes.html#sequence-types-str-unicode-list-tuple-bytearray-buffer-xrange<br>    return r<br><br><br>add_colons_to_mac( binascii.hexlify(arp.sha) )<br><br></pre>
 <br>
 <h6><a class="mozTocH5" name="mozTocId632084"></a>get_type</h6>
@@ -502,7 +504,8 @@ the code at <a href="#mozTocId632084">get_type</a>.<br>
 'in_cksum_add', 'in_cksum_done', 'itertools', 'socket', 'struct']<br>
 <br>
 <h5><a class="mozTocH5" name="mozTocId303086"></a>dpkt.ethernet.stp</h5>
-<br>
+<p>This is spanning tree protocol.<br>
+</p>
 <h5><a class="mozTocH5" name="mozTocId451840"></a>dpkt.ethernet.struct<br>
 </h5>
 <h4><a class="mozTocH4" name="mozTocId303989"></a>dpkt.ip</h4>
@@ -711,7 +714,10 @@ and 1440 bytes for IPv6.<br>
 <h4><a class="mozTocH4" name="mozTocId213737"></a>dpkt.tcp.dport</h4>
 <p>The destination port of the packet, a 16 bit unsigned number.&nbsp;
 For a list of well known destination ports, refer to <a
- href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a><br>
+ href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a>.&nbsp;
+If the SYN flag is set and the ACK flag is cleared, then this packet is
+the beginning of a connection and you may use the dport to determine
+what service is being used and how to decode the conversation.<br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId470551"></a>dpkt.tcp.flags</h4>
 <p>The TCP flags.&nbsp; To decode them, use the following code:</p>
@@ -752,6 +758,11 @@ sequence number is used to get the bytes back in order.<br>
 </p>
 <h4><a class="mozTocH4" name="mozTocId183496"></a>dpkt.tcp.sport
 </h4>
+<p>The source port, a 16 bit unsigned number.&nbsp; On the initial
+connection, this will be an ephemeral port in the range 49152 through
+6553 for most modern operating systems.<br>
+</p>
+<br>
 <h4><a class="mozTocH4" name="mozTocId306597"></a>dpkt.tcp.sum</h4>
 <br>
 <br>
