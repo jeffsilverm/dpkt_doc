@@ -39,7 +39,7 @@ def main() :
     elif sys.argv[1] == "-f" :
         pc = dpkt.pcap.Reader( open ( sys.argv[2] ) )
     else :
-        print """Use -i INTERFACE to [packet capture from an interface.
+        print """Use -i INTERFACE to packet capture from an interface.
 Use -f FILENAME to read a packet capture file"""
         sys.exit(2)
 
