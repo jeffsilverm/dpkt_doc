@@ -8,7 +8,7 @@
 import dpkt
 import sys
 # sys.path.append("/home/jeffs/python/PythonClass/dpkt_doc")
-import decode_tcp_iterator_2 as d
+import decode_tcp_iterator_2P as d
 import socket
 
 
@@ -18,7 +18,7 @@ def main(pc) :
 has the PUSH flag set."""
     for cid, received_string, ip_version in d.decode_tcp(pc) :      # cid = connection_id
 # This next line is for debugging only 
-        print d.connection_id_to_str (cid, ip_version), received_string 
+#        print d.connection_id_to_str (cid, ip_version), received_string 
         if cid[3] == 80 :         # cid[3] is the destination port
 # This is a message going to the server, a request
             src_addr = socket.inet_ntoa(cid[0]) if ip_version == 4 else socket.inet_ntop(socket.AF_INET6, cid[0])
@@ -32,7 +32,7 @@ has the PUSH flag set."""
 # 'body', 'data', 'headers', 'method', 'pack', 'pack_hdr', 'unpack', 'uri', 'version'        
             print "HTTP headers, packed ", http_req.pack()
             print "HTTP version", http_req.version
-            print "HTTP data ", http_req.data       # I think this is valid if the method is POST
+#            print "HTTP data ", http_req.data       # I think this is valid if the method is POST
 
         elif cid[1] == 80 :       # cid[1] is the source port
             try :
@@ -41,7 +41,7 @@ has the PUSH flag set."""
                 print "Status code is ", http.status
                 print "Status reason ", http.reason
                 for header in http.headers.keys() :
-                    print header, http.headers[header]
+                    print header, " is ", http.headers[header]
 #            print "date", http.headers['date']
 #            print "accept-ranges", http.headers['accept-ranges']
 #            print "content-type", http.headers['content-type']
