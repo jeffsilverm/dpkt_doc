@@ -28,7 +28,13 @@ class Connection_object :
         self.isn = isn              # initial sequence number.  All sequence numbers are relative to this number.
         self.seq = seq                       # last sequence number seen.  I'm not sure I need to keep this.
         self.buffer = { seq: string }        # the keys are the relative sequence numbers, the values are the strings
-        
+
+class ProtocolException(Exception):
+    """Raise this exception if a protocol error is detected, although it is more likely that my software is broken"""
+    def __init__(self, value):
+        self.parameter = value
+    def __str__(self):
+        return repr(self.parameter)        
 
 def assemble_buffer( buffer_dictionary ) :
     """The buffer dictionary contains segment numbers, which are byte offsets into the stream, and the bytes that the offsets point to.  This
@@ -104,7 +110,9 @@ def decode_tcp(pcap):
         else :
             print "packet %d is neither IPv4 nor IPv6" % packet_cntr
             continue    # Not going to deal with anything other than IP
-# At this point, we have a TCP packet, which is independent of IPv4 or IPv6 (except we need the source and destination addresses)
+# At this point, we have a TCP packet, which is independent of IPv4 or IPv6 (except we need the source and destination addresses).  Form a
+# connection ID so we know where to store this packet.
+        connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport)
         fin_flag = ( tcp.flags & dpkt.tcp.TH_FIN ) != 0
         syn_flag = ( tcp.flags & dpkt.tcp.TH_SYN ) != 0
         rst_flag = ( tcp.flags & dpkt.tcp.TH_RST ) != 0
@@ -113,7 +121,7 @@ def decode_tcp(pcap):
         urg_flag = ( tcp.flags & dpkt.tcp.TH_URG ) != 0
         ece_flag = ( tcp.flags & dpkt.tcp.TH_ECE ) != 0
         cwr_flag = ( tcp.flags & dpkt.tcp.TH_CWR ) != 0
-    # The flags string is really for debugging
+# The flags string is really for debugging
         flags = (
             ( "C" if cwr_flag else " " ) +
             ( "E" if ece_flag else " " ) +
@@ -124,38 +132,41 @@ def decode_tcp(pcap):
             ( "S" if syn_flag else " " ) +
             ( "F" if fin_flag else " " ) )
         if syn_flag and not ack_flag :
-    # Each TCP connection is forming.  The new connection is stored as an object in a dictionary
-    # whose key is the tuple (source_ip_address, source_tcp_port, destination_ip_address, destination_tcp_port)
-    # The connection is stored in a dictionary.  The key is the connection_id, value of each key is an object with fields for the
-    # current connection state and the total of all the bytes that have been sent
-    # Note that there are two connections, one from the client to the server and one from the server to the client.  This becomes
-    # important when the connection is closed, because one side might FIN the connection well before the other side does.
-            connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport)
+# Each TCP connection is forming.  The new connection is stored as an object in a dictionary
+# whose key is the tuple (source_ip_address, source_tcp_port, destination_ip_address, destination_tcp_port)
+# The connection is stored in a dictionary.  The key is the connection_id, value of each key is an object with fields for the
+# current connection state and the total of all the bytes that have been sent
+# Note that there are two connections, one from the client to the server and one from the server to the client.  This becomes
+# important when the connection is closed, because one side might FIN the connection well before the other side does.
             print "Forming a new connection " + connection_id_to_str( connection_id, ip.v ) + " Initial Sequence Number (ISN) is %d" % tcp.seq
             connection_table[connection_id] = Connection_object ( isn = tcp.seq, seq = tcp.seq, string = "" )
             print "Message segment size client side is ", get_message_segment_size ( tcp.opts )
         elif syn_flag and ack_flag :
-            connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport) 
             print "Server responding to a new connection " + connection_id_to_str( connection_id, ip.v ) + " Initial Sequence Number (ISN) is %d" % tcp.seq
             connection_table[connection_id] = Connection_object ( isn = tcp.seq, seq = tcp.seq, string = "" )
             print "Message segment size client side is ", get_message_segment_size ( tcp.opts ) 
 
-    # This is where I am having a little confusion.  My instinct tells me that the connection from the client to the server and the
-    # connection from the server back to the client should be connected somehow.  But they aren't, except for the SYN-ACK
-    # packet.  Otherwise, the source IP, destination IP, source port and destination port are mirror images, but the streams
-    # are separate.  The acknowlegement numbers are related, but we don't need to worry about acknowlegements
+# This is where I am having a little confusion.  My instinct tells me that the connection from the client to the server and the
+# connection from the server back to the client should be connected somehow.  But they aren't, except for the SYN-ACK
+# packet.  Otherwise, the source IP, destination IP, source port and destination port are mirror images, but the streams
+# are separate.  The acknowlegement numbers are related, but we don't need to worry about acknowlegements
+# Technically, I don't need to test for the ACK flag since it always set.
         elif not syn_flag and ack_flag :
             sequence_number = tcp.seq
             byte_offset = sequence_number - connection_table[connection_id].isn
             print flags+" Absolute sequence number %d ISN %d relative sequence number %d" % (sequence_number, connection_table[connection_id].isn, byte_offset)
             connection_table[connection_id].buffer[byte_offset] = tcp.data
             connection_table[connection_id].seq = sequence_number
-    # if the push flag or urg flag is set, then return the string to the caller, along with identifying information so that the
-    # caller knows which connection is getting data returned.
+# if the push flag or urg flag is set, then return the string to the caller, along with identifying information so that the
+# caller knows which connection is getting data returned.
             if psh_flag or urg_flag :
                 connection_string = assemble_buffer( connection_table[connection_id].buffer )
                 yield ( connection_id, connection_string, ip.v )
+        else :
+# syn_flag is clear and ack_flag is clear.  This is probably a software in my software.
+            raise ProtocolException ( "In packet %d, SYN is clear and ACK is clear.  This is terrible" % packet_cntr )
 
+        
 def main(pc) :
     """This is the outer loop that prints strings that have been captured from the TCP streams, terminated by a packet that
 has the PUSH flag set."""
@@ -165,17 +176,21 @@ has the PUSH flag set."""
                         
 
 if __name__ == "__main__" :
-    if len(sys.argv) < 2 :
-        decode_tcp_help()
+    if len(sys.argv) == 3 :
+        if sys.argv[1] == "-i" :
 # create an interator to return the next packet.  The source can be either an interface using the libpcap library or it can be a file in pcap
 # format such as created by tcpdump.
-    if sys.argv[1] == "eth0" :                  # wired ethernet interface
-        pc = pcap.pcap("eth0", promisc=True )
-    elif sys.argv[1] == "wlan0" :               # wireless interface
-        pc = pcap.pcap("wlan0", promisc=True )
-    elif sys.argv[1] == "sixxs" :               # IPv6 tunnel pseudo device
-        pc = pcap.pcap("sixxs", promisc=True )
+            pc = pcap.pcap( sys.argv[2] )
+        elif sys.argv[1] == "-f" :
+            pc = dpkt.pcap.Reader( open ( sys.argv[2] ) )
+        else :
+            print """Use -i INTERFACE to packet capture from an interface.
+Use -f FILENAME to read a packet capture file"""
+            sys.exit(2)
     else :
-        pc = dpkt.pcap.Reader ( open(sys.argv[1] ) )    # file interface
+        print """Use -i INTERFACE to packet capture from an interface.
+Use -f FILENAME to read a packet capture file"""
+        sys.exit(2)
+
     main(pc)
 
