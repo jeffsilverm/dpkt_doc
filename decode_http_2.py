@@ -39,7 +39,7 @@ has the PUSH flag set."""
                 http = dpkt.http.Response(received_string)
                 print "HTTP version is ", http.version
                 print "Status code is ", http.status
-                print "Status reason ", http.reason
+                print "Status reason is ", http.reason
                 for header in http.headers.keys() :
                     print header, " is ", http.headers[header]
 #            print "date", http.headers['date']
