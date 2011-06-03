@@ -7,7 +7,6 @@
 
 import dpkt
 import sys
-# sys.path.append("/home/jeffs/python/PythonClass/dpkt_doc")
 import decode_tcp_iterator_2P as d
 import socket
 
