@@ -31,12 +31,15 @@ def main(f):
 # Also, this changes a little bit with IPv6.  To tell the difference between IPv4 and IPv6, you have to look
 # at the ethertype field, which is given by http://www.iana.org/assignments/ethernet-numbers.  IPv4 is 0x800 or 2048
 # and IPv6 is 0x86DD or 34525
-# This is simplistic - IP packets can be fragmented.  Also, this only works for IPv4.  IPv6 has a different Ethertype    
-        ip = eth.data
-        if eth.type == dpkt.ethernet.ETH_TYPE_IP :
-            pass
+# This is simplistic - IP packets can be fragmented.  Also, this only works for IPv4.  IPv6 has a different Ethertype
+        if eth.type != dpkt.ethernet.ETH_TYPE_IP :
+            continue
         elif eth.type == dpkt.ethernet.ETH_TYPE_IP6 :
             pass
+        ip = eth.data
+        # If not a TCP paaket
+        if ip.p != dpkt.ip.IP_PROTO_TCP:
+            continue
     # This is also simplistic - TCP packets can be fragmented, and also retransmitted
     #
         tcp = ip.data
@@ -57,7 +60,7 @@ def main(f):
                 ( "R" if rst_flag else " " ) +
                 ( "S" if syn_flag else " " ) +
                 ( "F" if fin_flag else " " ) )
-                
+
         print packet_cntr, "\t", tcp.sport, "\t", tcp.dport, "\t", flags
         connection_id = (ip.src, tcp.sport, ip.dst, tcp.dport)
         if syn_flag and not ack_flag :
@@ -74,20 +77,22 @@ def main(f):
     # This is where I am having a little confusion.  My instinct tells me that the connection from the client to the server and the
     # connection from the server back to the client should be connected somehow.
         elif not syn_flag and ack_flag :
+            if connection_id not in connection_table.keys():
+                # Not a complete connection
+                connection_table[connection_id] = []
+
             connection_table[connection_id].append(tcp.data)
         elif fin_flag :
             pass
     # Also need to think about the RESET flag
-            
+
     f.close()
     for connection_id in connection_table.keys() :
         print "Connection "+ connection_id_to_str(connection_id)
         print connection_table[connection_id]
 
-        
+
 
 if __name__ == "__main__" :
     f = open(sys.argv[1])
     main(f)
-
-    
