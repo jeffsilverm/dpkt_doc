@@ -24,6 +24,9 @@ def initialize_tables() :
                  13:"HINFO",    # Host information, RFC 1035
                  15:"MX",       # Mail exchange, RFC 1035
                  28:"AAAA",     # IP v6 address, RFC 3596
+                 16:"TXT",      # 
+                 33:"SRV",     # RFC 2782
+                 255:"ANY",     # all cached reco
                  }
                 
 def hexify(x):
@@ -50,20 +53,33 @@ def decode_dns_response ( rr, response_type ) :
     r_type = rr.type
     r_data = rr.rdata
     if rr.cls != 1 :
-        print "Response is not class IN, might be Hesiod, chaos, or qclass (all of which are anachronisms)"
-    print "Response is component", response_type 
+        print "Response class is %d, not class IN, might be Hesiod, chaos, or qclass (all of which are anachronisms)",%rr.cls
+    print "Response is component", response_type,r_type,type_table[r_type] if r_type in type_table else 'unknown'
     if r_type == dpkt.dns.DNS_CNAME :
-        print "Response is a CNAME ", r_data," in hex: ",  hexify(r_data)
+       #print "Response is a CNAME ", r_data," in hex: ",  hexify(r_data)
+        print "Response is a CNAME ", rr.cname
     elif r_type == dpkt.dns.DNS_A  :
         print "response is an IPv4 address", socket.inet_ntoa( r_data )
     elif r_type == dpkt.dns.DNS_NS :
-        print "Response is a NS name", r_data," in hex: ",  hexify(r_data) 
+        #print "Response is a NS name", r_data," in hex: ",  hexify(r_data) 
+        print "Response is a NS name", rr.nsname
     elif r_type == dpkt.dns.DNS_AAAA :
         print "response is an IPv6 address", socket.inet_ntop( socket.AF_INET6, r_data )
     elif r_type == dpkt.dns.DNS_PTR :
-        print "response is a hostname from an IP address", r_data, "in hex: ", hexify(r_data)
+        #print "response is a hostname from an IP address", r_data, "in hex: ", hexify(r_data)
+        print "response is a hostname from an IP address", rr.ptrname
+    elif r_type == dpkt.dns.DNS_SOA :
+        print 'DNS_SOA:',rr.mname,rr.rname,rr.serial,rr.refresh,rr.retry,rr.expire, rr.minimum 
+    elif r_type == dpkt.dns.DNS_MX :
+        print 'DNS_MX:',rr.mxname,rr.preference
+    elif r_type == dpkt.dns.DNS_HINFO :
+        print 'DNS_HINFO:',rr.text
+    elif r_type == dpkt.dns.DNS_TXT :
+        print "TEXT:",rr.text
+    elif r_type == dpkt.dns.DNS_SRV :
+        print 'DNS_SRV:',rr.srvname,rr.port,rr.priority,rr.weight
     else :
-        print "Response type is something other than a CNAME, PTR, IPv4 address, or IPv6 address", r_type,
+        print "Response type is something other than a CNAME, PTR, IPv4 address, or IPv6 address ...", r_type,
         if r_type in type_table :
             print type_table[r_type]
             print "r-data is ", r_data," in hex: ",  hexify(r_data)
